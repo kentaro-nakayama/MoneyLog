@@ -2,33 +2,88 @@
 
 /* ////////////////////////////////// */
 /* ////////////////////////////////// */
+/* 猫テーマ（style.cssと同じセレクタ構成の差し替え版） */
+/* ////////////////////////////////// */
+/* ////////////////////////////////// */
+
+@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Rounded+Mplus+1c:wght@400;700&display=swap');
+
+/* ////////////////////////////////// */
 /* 全体のスタイル */
 /* ////////////////////////////////// */
-/* ////////////////////////////////// */
 :root {
-    --color-main: rgb(64, 110, 229);
-    --color-text: #666;
-    --color-income: green;
-    --color-expense: red;
+    --color-main: #c9834a;
+    --color-main-dark: #a8672f;
+    --color-text: #4a4038;
+    --color-cream: #f6f1ea;
+    --color-income: #93bc5c;
+    --color-expense: #e04e4e;
 }
 
 body {
-    background-color: #f4f5f7;
+    background-color: var(--color-cream);
+    background-image: url('/images/cat/paw-print-bg.svg');
+    background-repeat: repeat;
+    background-size: 90px 90px;
+    background-attachment: fixed;
+    background-position: 0 0;
+    color: var(--color-text);
+    font-family: "Rounded Mplus 1c", "Hiragino Maru Gothic ProN", sans-serif;
 }
 
 /* ////////////////////////////////// */
-/* ////////////////////////////////// */
 /* ヘッダー */
-/* ////////////////////////////////// */
 /* ////////////////////////////////// */
 header {
     background-color: var(--color-main);
+    background-image: linear-gradient(135deg, var(--color-main), var(--color-main-dark));
     color: #fff;
     padding: 15px;
     display: flex;
+    align-items: center;
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 20px;
+    border-bottom: 4px solid #fff;
+    border-radius: 0 0 20px 20px;
+    font-family: "Mochiy Pop One", "Rounded Mplus 1c", sans-serif;
+    position: relative;
+}
+
+/* 猫耳っぽい三角を上部に */
+header::before,
+header::after {
+    content: "";
+    position: absolute;
+    top: -14px;
+    width: 0;
+    height: 0;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+    border-bottom: 20px solid var(--color-main);
+}
+
+header::before {
+    left: 14px;
+    transform: rotate(-8deg);
+}
+
+header::after {
+    right: 14px;
+    transform: rotate(8deg);
+}
+
+/* ウォレットアイコンを猫の顔アイコンに差し替え */
+header .bi-wallet2 {
+    font-size: 0;
+    width: 36px;
+    height: 36px;
+    display: inline-block;
+    background-image: url('/images/cat/cat-face.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
 }
 
 header h1 {
@@ -39,17 +94,22 @@ h2 {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: var(--color-text);
+    color: var(--color-main-dark);
+    font-family: "Mochiy Pop One", "Rounded Mplus 1c", sans-serif;
+}
+
+h2 .bi-plus-circle {
+    color: var(--color-main);
 }
 
 hr {
     margin-bottom: 20px;
+    border: none;
+    border-top: 2px dashed #d9c3a8;
 }
 
 /* ////////////////////////////////// */
-/* ////////////////////////////////// */
 /* ホーム */
-/* ////////////////////////////////// */
 /* ////////////////////////////////// */
 .inner-wrap {
     width: 90%;
@@ -71,11 +131,17 @@ hr {
     display: inline-block;
     padding: 5px 15px;
     border-radius: 20px;
+    border: 2px solid var(--color-main);
+}
+
+.switch-btn {
+    color: var(--color-main-dark);
 }
 
 .btn-selected {
     background-color: var(--color-main);
     color: white;
+    border-color: var(--color-main);
 }
 
 /* 期間移動 */
@@ -88,6 +154,7 @@ hr {
 
 .switch-term .switch-btn {
     font-size: 18px;
+    color: var(--color-main-dark);
 }
 
 .switch-term .term {
@@ -97,16 +164,17 @@ hr {
 
 /* 今月の収支 */
 .card {
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    box-shadow: 0 4px 14px rgba(120, 90, 50, 0.15);
     padding: 15px;
     font-size: 13px;
     margin-bottom: 20px;
     background-color: #fff;
+    border: 2px solid #ede1d3;
 }
 
 .balance {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 2px dashed #e3d5c2;
     margin-bottom: 10px;
 }
 
@@ -115,6 +183,7 @@ hr {
     font-weight: bold;
     padding: 10px 0;
     color: var(--color-income);
+    font-family: "Mochiy Pop One", "Rounded Mplus 1c", sans-serif;
 }
 
 .income-expense-area {
@@ -128,7 +197,7 @@ hr {
 }
 
 .border {
-    border-left: 1px solid #ccc;
+    border-left: 2px dashed #e3d5c2;
 }
 
 .income-text {
@@ -147,7 +216,7 @@ hr {
 
 /* 週別収支カード */
 .card-title {
-    color: #888;
+    color: #9c8b7a;
     font-size: 13px;
     margin-bottom: 10px;
 }
@@ -178,18 +247,19 @@ hr {
     justify-content: space-between;
     padding: 0 5px 8px;
     font-size: 13px;
-    color: #888;
+    color: #9c8b7a;
 }
 
 .transaction-list {
     background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    box-shadow: 0 4px 14px rgba(120, 90, 50, 0.15);
+    border: 2px solid #ede1d3;
     overflow: hidden;
 }
 
 .transaction-item {
-    border-bottom: 1px solid #eee;
+    border-bottom: 2px dashed #ede1d3;
 }
 
 .transaction-item:last-child {
@@ -215,12 +285,12 @@ hr {
 }
 
 .transaction-icon-expense {
-    background-color: var(--color-expense);
+    background-color: #ede1d3;
     color: var(--color-expense);
 }
 
 .transaction-icon-income {
-    background-color: var(--color-income);
+    background-color: #dff3ea;
     color: var(--color-income);
 }
 
@@ -236,7 +306,7 @@ hr {
 
 .transaction-memo {
     font-size: 12px;
-    color: #999;
+    color: #9c8b7a;
 }
 
 .transaction-amount {
@@ -246,8 +316,7 @@ hr {
     white-space: nowrap;
 }
 
-
-/* 収支新規登録ボタン */
+/* 収支新規登録ボタン（肉球型） */
 .add-btn {
     position: fixed;
     right: 20px;
@@ -261,43 +330,54 @@ hr {
     background-color: var(--color-main);
     color: #fff;
     font-size: 22px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 14px rgba(120, 90, 50, 0.4);
 }
 
-/* ////////////////////////////////// */
-/* ////////////////////////////////// */
-/* 新規登録画面 */
-/* ////////////////////////////////// */
-/* ////////////////////////////////// */
+.add-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px #fff inset;
+    pointer-events: none;
+}
 
 /* バリデーションエラー */
 .alert {
     padding: 12px 15px;
-    border-radius: 10px;
+    border-radius: 14px;
     margin-bottom: 20px;
     font-size: 14px;
 }
 
 .alert-danger {
-    background-color: #fde3e3;
-    border: 1px solid #d9534f;
-    color: #d9534f;
+    background-color: #ede1d3;
+    border: 2px dashed var(--color-expense);
+    color: #8f4a34;
 }
 
 .alert ul {
-    padding-left: 1.2em;
-    list-style: disc;
+    padding-left: 1.4em;
+}
+
+.alert li {
+    list-style-type: "🐾 ";
+    padding-left: 4px;
 }
 
 .alert li + li {
     margin-top: 4px;
 }
 
+/* ////////////////////////////////// */
+/* 新規登録画面 */
+/* ////////////////////////////////// */
+
 /* 収入/支出選択ボタン */
 .income-expense-btn-area {
     display: flex;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    border: 2px solid #e3d5c2;
+    border-radius: 14px;
     overflow: hidden;
     margin-bottom: 20px;
 }
@@ -317,7 +397,7 @@ hr {
     gap: 6px;
     padding: 6px;
     font-weight: bold;
-    color: #666;
+    color: #9c8b7a;
     cursor: pointer;
     font-size: 16px;
 }
@@ -341,16 +421,18 @@ hr {
 .input-title {
     font-size: 14px;
     margin-bottom: 8px;
+    color: var(--color-text);
 }
 
 .amount-input-area {
     display: flex;
     align-items: center;
     gap: 8px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    border: 2px solid #e3d5c2;
+    border-radius: 14px;
     padding: 6px 15px;
     margin-bottom: 20px;
+    background-color: #fff;
 }
 
 .amount-input-area:focus-within {
@@ -358,7 +440,7 @@ hr {
 }
 
 .currency-symbol {
-    color: #888;
+    color: var(--color-main-dark);
     font-weight: bold;
 }
 
@@ -367,6 +449,8 @@ hr {
     border: none;
     outline: none;
     font-size: 18px;
+    background: transparent;
+    color: var(--color-text);
 }
 
 /* カテゴリー選択 */
@@ -386,12 +470,13 @@ hr {
 .category-btn {
     display: inline-block;
     padding: 8px 16px;
-    border: 1px solid #ccc;
+    border: 2px solid #e3d5c2;
     border-radius: 999px;
-    color: #666;
+    color: #9c8b7a;
     cursor: pointer;
     margin-right: 5px;
     margin-bottom: 10px;
+    background-color: #fff;
 }
 
 .category-radio:checked + .category-btn {
@@ -407,32 +492,35 @@ hr {
 
 /* 日付 */
 .date-input {
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        padding: 10px 15px;
-        margin-bottom: 20px;
-        width: 100%;
+    border: 2px solid #e3d5c2;
+    border-radius: 14px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    width: 100%;
+    background-color: #fff;
+    color: var(--color-text);
 }
 
 /* メモ */
 .memo-input {
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        padding: 10px 15px;
-        margin-bottom: 20px;
-        width: 100%;
+    border: 2px solid #e3d5c2;
+    border-radius: 14px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    width: 100%;
+    background-color: #fff;
+    color: var(--color-text);
 }
 
 /* 登録ボタン */
 .register-btn {
     background-color: var(--color-main);
+    background-image: linear-gradient(135deg, var(--color-main), var(--color-main-dark));
     color: white;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 14px;
     font-size: 16px;
     font-weight: bold;
     width: 100%;
+    font-family: "Mochiy Pop One", "Rounded Mplus 1c", sans-serif;
 }
-
-
-

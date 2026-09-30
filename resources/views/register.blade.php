@@ -8,7 +8,7 @@
     <!-- BootStrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <!-- css -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style_cat.css') }}">
     <title>MoneyLog</title>
 </head>
 <body class="home">
@@ -24,12 +24,22 @@
                     新規登録
                 </h2>
                 <hr>
-                <form action="" method="POST">
+                <form action="{{ url('/register') }}" method="POST">
+                    @csrf
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <!-- 収入/支出選択ボタン -->
                     <div class="income-expense-btn-area">
-                        <input type="radio" id="type-income" name="type" value="income" class="type-radio">
+                        <input type="radio" id="type-income" name="type" value="収入" class="type-radio">
                         <label for="type-income" class="type-btn type-income-btn">収入</label>
-                        <input type="radio" id="type-expense" name="type" value="expense" class="type-radio" checked>
+                        <input type="radio" id="type-expense" name="type" value="支出" class="type-radio" checked>
                         <label for="type-expense" class="type-btn type-expense-btn">支出</label>
                     </div>
                     <!-- 金額入力欄 -->

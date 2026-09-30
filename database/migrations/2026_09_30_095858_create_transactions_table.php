@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('type', ['income', 'expense']);
+            $table->enum('type', ['収入', '支出']);
             $table->unsignedInteger('amount');
             $table->enum('category', ['食費', '日用品', '交通費', '趣味', '光熱費', 'その他'])->nullable();
             $table->date('date');

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="猫の顔アイコン">
+    <!-- 耳 -->
+    <path d="M20 38 L28 10 L45 32 Z" fill="#c9834a"/>
+    <path d="M80 38 L72 10 L55 32 Z" fill="#c9834a"/>
+    <path d="M24 34 L29 18 L40 31 Z" fill="#f6f1ea"/>
+    <path d="M76 34 L71 18 L60 31 Z" fill="#f6f1ea"/>
+
+    <!-- 顔 -->
+    <circle cx="50" cy="56" r="34" fill="#f6f1ea"/>
+
+    <!-- ほっぺ -->
+    <circle cx="26" cy="64" r="7" fill="#e3d0b8" opacity="0.8"/>
+    <circle cx="74" cy="64" r="7" fill="#e3d0b8" opacity="0.8"/>
+
+    <!-- 目 -->
+    <path d="M34 52 Q38 46 42 52" stroke="#6b4a4a" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M58 52 Q62 46 66 52" stroke="#6b4a4a" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+    <!-- 鼻・口 -->
+    <path d="M47 62 L53 62 L50 66 Z" fill="#a8672f"/>
+    <path d="M50 66 Q50 70 44 71" stroke="#6b4a4a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M50 66 Q50 70 56 71" stroke="#6b4a4a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+    <!-- ひげ -->
+    <path d="M10 58 L28 60" stroke="#d9c3a8" stroke-width="2" stroke-linecap="round"/>
+    <path d="M11 66 L28 65" stroke="#d9c3a8" stroke-width="2" stroke-linecap="round"/>
+    <path d="M90 58 L72 60" stroke="#d9c3a8" stroke-width="2" stroke-linecap="round"/>
+    <path d="M89 66 L72 65" stroke="#d9c3a8" stroke-width="2" stroke-linecap="round"/>
+</svg>
