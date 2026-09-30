@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('type'); 
-            // 'income', 'expense'
-            $table->integer('amount');
-            $table->string('category');
-            // '食費', '日用品', '交通費', '趣味', '光熱費', 'その他'
-            $table->
+            $table->enum('type', ['income', 'expense']);
+            $table->unsignedInteger('amount');
+            $table->enum('category', ['食費', '日用品', '交通費', '趣味', '光熱費', 'その他'])->nullable();
+            $table->date('date');
+            $table->text('memo')->nullable();
             $table->timestamps();
         });
     }
