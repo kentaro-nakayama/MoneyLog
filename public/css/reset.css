@@ -1,0 +1,67 @@
+@charset "UTF-8";
+
+/* ===== CSS Reset ===== */
+
+/* 全要素のmargin/paddingをリセットし、box-sizingを統一 */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* リストの黒丸・番号を非表示 */
+ul,
+ol {
+    list-style: none;
+}
+
+/* リンクの下線・文字色をリセットして周囲から継承させる */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 画像を扱いやすくする */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* フォーム要素にフォントを継承させる */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    color: inherit;
+}
+
+/* ボタンの見た目をリセット */
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* 見出しの文字サイズ・太さをリセット（必要な箇所で個別に指定する） */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
