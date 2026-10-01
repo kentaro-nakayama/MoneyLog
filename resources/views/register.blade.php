@@ -8,6 +8,9 @@
     </header>
     <main>
         <div class="inner-wrap">
+            <div class="back-to-home">
+                <a href="{{ url('/') }}"><i class="bi bi-chevron-left"></i><span>ホーム</span></a>
+            </div>
             <div class="card">
                 <h2>
                     <i class="bi bi-plus-circle"></i>

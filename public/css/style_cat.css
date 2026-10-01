@@ -326,6 +326,18 @@ a.add-btn:hover {
 /* 新規登録画面 */
 /* ////////////////////////////////// */
 
+.back-to-home {
+    margin-bottom: 20px;
+}
+
+.back-to-home a {
+    color: var(--color-main-dark)
+}
+
+.back-to-home span {
+    margin-left: 5px;
+}
+
 /* 収入/支出選択ボタン */
 .income-expense-btn-area {
     display: flex;
