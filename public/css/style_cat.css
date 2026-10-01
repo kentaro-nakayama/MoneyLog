@@ -116,34 +116,6 @@ hr {
     margin: 0 auto;
 }
 
-/* 週別・月別切り替えボタン */
-.switch-btn-area {
-    margin-bottom: 10px;
-}
-
-.switch-btn-area .switch-btn-list {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-
-.switch-btn-area .switch-btn-list .switch-btn {
-    display: inline-block;
-    padding: 5px 15px;
-    border-radius: 20px;
-    border: 2px solid var(--color-main);
-}
-
-.switch-btn {
-    color: var(--color-main-dark);
-}
-
-.btn-selected {
-    background-color: var(--color-main);
-    color: white;
-    border-color: var(--color-main);
-}
-
 /* 期間移動 */
 .switch-term {
     display: flex;
@@ -178,11 +150,19 @@ hr {
     margin-bottom: 10px;
 }
 
-.balance-text {
+.balance-plus {
     font-size: 24px;
     font-weight: bold;
     padding: 10px 0;
     color: var(--color-income);
+    font-family: "Mochiy Pop One", "Rounded Mplus 1c", sans-serif;
+}
+
+.balance-minus {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px 0;
+    color: var(--color-expense);
     font-family: "Mochiy Pop One", "Rounded Mplus 1c", sans-serif;
 }
 
@@ -513,10 +493,21 @@ hr {
 }
 
 /* 登録ボタン */
-.register-btn {
+.btn-large {
     background-color: var(--color-main);
     background-image: linear-gradient(135deg, var(--color-main), var(--color-main-dark));
     color: white;
+    padding: 10px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+    font-family: "Mochiy Pop One", "Rounded Mplus 1c", sans-serif;
+}
+
+.btn-delete {
+    border: 2px solid var(--color-expense);
+    color: var(--color-expense);
     padding: 10px;
     border-radius: 14px;
     font-size: 16px;

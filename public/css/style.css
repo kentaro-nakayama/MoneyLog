@@ -56,28 +56,6 @@ hr {
     margin: 0 auto;
 }
 
-/* 週別・月別切り替えボタン */
-.switch-btn-area {
-    margin-bottom: 10px;
-}
-
-.switch-btn-area .switch-btn-list {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-
-.switch-btn-area .switch-btn-list .switch-btn {
-    display: inline-block;
-    padding: 5px 15px;
-    border-radius: 20px;
-}
-
-.btn-selected {
-    background-color: var(--color-main);
-    color: white;
-}
-
 /* 期間移動 */
 .switch-term {
     display: flex;
@@ -110,11 +88,18 @@ hr {
     margin-bottom: 10px;
 }
 
-.balance-text {
+.balance-plus {
     font-size: 24px;
     font-weight: bold;
     padding: 10px 0;
     color: var(--color-income);
+}
+
+.balance-minus {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px 0;
+    color: var(--color-expense);
 }
 
 .income-expense-area {
@@ -215,12 +200,12 @@ hr {
 }
 
 .transaction-icon-expense {
-    background-color: var(--color-expense);
+    background-color: #fde3e3;
     color: var(--color-expense);
 }
 
 .transaction-icon-income {
-    background-color: var(--color-income);
+    background-color: #e3f5e3;
     color: var(--color-income);
 }
 

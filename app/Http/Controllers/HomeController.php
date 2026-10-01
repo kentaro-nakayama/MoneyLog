@@ -16,7 +16,12 @@ class HomeController extends Controller
 
         // 「今週の収支」は閲覧中の年月に関係なく、常に「本当に今日を含む週」を使う
         $today = Carbon::now();
-    
+
+        // 表示中の年月から「前の月」「次の月」を計算する（期間移動の矢印リンク用）
+        $currentMonth = Carbon::create($year, $month, 1);
+        $prevMonth = $currentMonth->copy()->subMonth(); // 1ヶ月前
+        $nextMonth = $currentMonth->copy()->addMonth(); // 1ヶ月後
+
         // 上で作った4つの関数を呼び出して、ビューに渡すデータを準備する
         // $this は現在の HomeController インスタンスを指し、その private メソッドを呼び出す。
         $monthlyTotal = $this->calculateMonthlyTotal($year, $month);
@@ -27,6 +32,10 @@ class HomeController extends Controller
         return view('home', [
             'year' => $year,
             'month' => $month,
+            'prevYear' => $prevMonth->year,
+            'prevMonth' => $prevMonth->month,
+            'nextYear' => $nextMonth->year,
+            'nextMonth' => $nextMonth->month,
             'monthlyTotal' => $monthlyTotal,
             'weeklyTotal' => $weeklyTotal,
             'weeklyBreakdown' => $weeklyBreakdown,

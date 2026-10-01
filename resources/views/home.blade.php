@@ -18,22 +18,10 @@
     </header>
     <main>
         <div class="inner-wrap">
-            <!-- 週別・月別切り替えボタン -->
-            <div class="switch-btn-area">
-                <ul class="switch-btn-list">
-                    <li>
-                        <a href="" class="switch-btn btn-selected">週別</a>
-                    </li>
-                    <li>
-                        <a href="" class="switch-btn">月別</a>
-                    </li>
-                </ul>
-            </div>
-
             <!-- 期間移動 -->
             <div class="switch-term">
                 <div class="switch-btn">
-                    <a href="">
+                    <a href="{{ route('home',['year' => $prevYear, 'month' => $prevMonth]) }}">
                         <i class="bi bi-chevron-left"></i>
                     </a>
                 </div>
@@ -41,7 +29,7 @@
                     {{ $year }}年{{ $month }}月
                 </div>
                 <div class="switch-btn">
-                    <a href="">
+                    <a href="{{ route('home',['year' => $nextYear, 'month' => $nextMonth]) }}">
                         <i class="bi bi-chevron-right"></i>
                     </a>
                 </div>
@@ -52,13 +40,11 @@
                 <!-- 今月の収支 -->
                 <div class="balance">
                     <p>今月の収支</p>
-                    <p class="balance-text">
-                        @if ($monthlyTotal > 0)
-                        +
+                        @if ($monthlyTotal['balance'] >= 0)
+                        <p class="balance-plus">+¥{{ number_format(abs($monthlyTotal['balance'])) }}</p>
                         @else
-                        -
+                        <p class="balance-minus">-¥{{ number_format(abs($monthlyTotal['balance'])) }}</p>
                         @endif
-                        ¥{{ number_format($monthlyTotal['balance']) }}
                     </p>
                 </div>
                 <!-- 収支/収支グループ -->
@@ -113,7 +99,7 @@
                             @foreach ($transactions as $transaction)
                                 <!-- 収支詳細 -->
                                 <li class="transaction-item">
-                                    <a href="">
+                                    <a href="{{ url('/edit_form/' . $transaction->id) }}">
                                         <div class="transaction-icon transaction-icon-{{ $transaction->type === '支出' ? 'expense' : 'income' }}">
                                             {{-- $categoryIcons[カテゴリ名] で対応表からアイコンを探す。
                                                 見つからない場合（カテゴリが未設定など）は ?? の右側 'bi-wallet2' を使う --}}
