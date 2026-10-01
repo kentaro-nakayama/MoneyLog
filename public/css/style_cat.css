@@ -6,7 +6,7 @@
 /* ////////////////////////////////// */
 /* ////////////////////////////////// */
 
-@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Rounded+Mplus+1c:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rounded+Mplus+1c:wght@400;700&display=swap');
 
 /* ////////////////////////////////// */
 /* 全体のスタイル */
@@ -41,7 +41,6 @@ header {
     margin-bottom: 20px;
     border-bottom: 4px solid #fff;
     border-radius: 0 0 20px 20px;
-    font-family: "Mochiy Pop One", "Rounded Mplus 1c", sans-serif;
     position: relative;
 }
 
@@ -67,7 +66,6 @@ h2 {
     font-weight: bold;
     margin-bottom: 10px;
     color: var(--color-main-dark);
-    font-family: "Mochiy Pop One", "Rounded Mplus 1c", sans-serif;
 }
 
 h2 .bi-plus-circle {
@@ -127,7 +125,6 @@ hr {
     font-weight: bold;
     padding: 10px 0;
     color: var(--color-income);
-    font-family: "Mochiy Pop One", "Rounded Mplus 1c", sans-serif;
 }
 
 .balance-minus {
@@ -135,7 +132,6 @@ hr {
     font-weight: bold;
     padding: 10px 0;
     color: var(--color-expense);
-    font-family: "Mochiy Pop One", "Rounded Mplus 1c", sans-serif;
 }
 
 .income-expense-area {
@@ -474,7 +470,6 @@ hr {
     font-size: 16px;
     font-weight: bold;
     width: 100%;
-    font-family: "Mochiy Pop One", "Rounded Mplus 1c", sans-serif;
 }
 
 .btn-delete {
@@ -485,5 +480,4 @@ hr {
     font-size: 16px;
     font-weight: bold;
     width: 100%;
-    font-family: "Mochiy Pop One", "Rounded Mplus 1c", sans-serif;
 }
