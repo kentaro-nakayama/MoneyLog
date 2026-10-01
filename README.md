@@ -9,12 +9,12 @@
 スマホでの利用を想定しているアプリのため、スクリーンショットもスマホサイズで撮影しています。
 
 ### ホーム画面
-<img src="docs/screenshots/home.jpg" alt="ホーム画面のスクリーンショット" width="320">
+<img src="docs/screenshots/home.png" alt="ホーム画面のスクリーンショット" width="320">
 
 その月の収支（今月の収支・収入・支出の合計）と、週ごとの収支内訳をまとめて確認できます。画面右下の「＋」ボタンから新規登録画面へ移動できます。
 
 ### 新規登録画面
-<img src="docs/screenshots/register.jpg" alt="新規登録画面のスクリーンショット" width="320">
+<img src="docs/screenshots/register.png" alt="新規登録画面のスクリーンショット" width="320">
 
 収入・支出の種別、金額、カテゴリ、日付、メモを入力して家計簿に記録できます。カテゴリはボタンをタップするだけで選択できます。
 
