@@ -22,11 +22,6 @@
 
 body {
     background-color: var(--color-cream);
-    background-image: url('/images/cat/paw-print-bg.svg');
-    background-repeat: repeat;
-    background-size: 90px 90px;
-    background-attachment: fixed;
-    background-position: 0 0;
     color: var(--color-text);
     font-family: "Rounded Mplus 1c", "Hiragino Maru Gothic ProN", sans-serif;
 }
@@ -50,36 +45,13 @@ header {
     position: relative;
 }
 
-/* 猫耳っぽい三角を上部に */
-header::before,
-header::after {
-    content: "";
-    position: absolute;
-    top: -14px;
-    width: 0;
-    height: 0;
-    border-left: 16px solid transparent;
-    border-right: 16px solid transparent;
-    border-bottom: 20px solid var(--color-main);
-}
-
-header::before {
-    left: 14px;
-    transform: rotate(-8deg);
-}
-
-header::after {
-    right: 14px;
-    transform: rotate(8deg);
-}
-
-/* ウォレットアイコンを猫の顔アイコンに差し替え */
+/* ウォレットアイコンを肉球アイコンに差し替え */
 header .bi-wallet2 {
     font-size: 0;
     width: 36px;
     height: 36px;
     display: inline-block;
-    background-image: url('/images/cat/cat-face.svg');
+    background-image: url('/images/cat/paw-print-header.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
