@@ -78,11 +78,11 @@
                     </div>
                     <button type="submit" class="btn-large">編集する</button>
                 </form>
-            </div>
-            <form action="{{ url('/delete/' . $transaction->id) }}" method="POST">
+                <form action="{{ url('/delete/' . $transaction->id) }}" method="POST">
                     @csrf
                     <button type="submit" class="btn-delete">削除する</button>
-            </form>
+                </form>
+            </div>
         </div>
     </main>
 </body>

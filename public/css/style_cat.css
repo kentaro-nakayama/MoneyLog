@@ -6,7 +6,7 @@
 /* ////////////////////////////////// */
 /* ////////////////////////////////// */
 
-@import url('https://fonts.googleapis.com/css2?family=Rounded+Mplus+1c:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Rounded+Mplus+1c:wght@400;700&display=swap");
 
 /* ////////////////////////////////// */
 /* 全体のスタイル */
@@ -14,6 +14,7 @@
 :root {
     --color-main: #c9834a;
     --color-main-dark: #a8672f;
+    --color-main-light: #e0b78a;
     --color-text: #4a4038;
     --color-cream: #f6f1ea;
     --color-income: #93bc5c;
@@ -31,7 +32,6 @@ body {
 /* ////////////////////////////////// */
 header {
     background-color: var(--color-main);
-    background-image: linear-gradient(135deg, var(--color-main), var(--color-main-dark));
     color: #fff;
     padding: 15px;
     display: flex;
@@ -50,7 +50,7 @@ header .bi-wallet2 {
     width: 36px;
     height: 36px;
     display: inline-block;
-    background-image: url('/images/cat/paw-print-header.svg');
+    background-image: url("/images/cat/paw-print-header.svg");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -279,6 +279,11 @@ hr {
     color: #fff;
     font-size: 22px;
     box-shadow: 0 4px 14px rgba(120, 90, 50, 0.4);
+    transition: transform 0.2s ease;
+}
+
+a.add-btn:hover {
+    transform: scale(1.3);
 }
 
 .add-btn::after {
@@ -463,13 +468,17 @@ hr {
 /* 登録ボタン */
 .btn-large {
     background-color: var(--color-main);
-    background-image: linear-gradient(135deg, var(--color-main), var(--color-main-dark));
     color: white;
     padding: 10px;
     border-radius: 14px;
     font-size: 16px;
     font-weight: bold;
     width: 100%;
+    transition: filter 0.15s ease;
+}
+
+button.btn-large:hover {
+    filter: brightness(0.92);
 }
 
 .btn-delete {
@@ -480,4 +489,12 @@ hr {
     font-size: 16px;
     font-weight: bold;
     width: 100%;
+    transition: all 0.2s ease;
+    margin-top: 20px;
+}
+
+.btn-delete:hover {
+    border: 2px solid white;
+    background-color: var(--color-expense);
+    color: white;
 }
