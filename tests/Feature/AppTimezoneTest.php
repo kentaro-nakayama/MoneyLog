@@ -6,9 +6,20 @@ use Tests\TestCase;
 
 class AppTimezoneTest extends TestCase
 {
+    private ?string $originalTimezone = null;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // phpunit.xml で決めた値（UTC）を覚えておき、テストのあとに必ず戻す。
+        // 消してしまうと、次に .env が読まれたときに開発用の値で上書きされるため。
+        $this->originalTimezone = $_ENV['APP_TIMEZONE'] ?? null;
+    }
+
     protected function tearDown(): void
     {
-        $this->setAppTimezoneEnv(null);
+        $this->setAppTimezoneEnv($this->originalTimezone);
 
         parent::tearDown();
     }
