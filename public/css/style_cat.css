@@ -2,80 +2,205 @@
 
 /* ////////////////////////////////// */
 /* ////////////////////////////////// */
-/* 猫テーマ（style.cssと同じセレクタ構成の差し替え版） */
+/* 猫テーマ（ガラスモーフィズム / 寒色系） */
+/* style.cssと同じセレクタ構成の差し替え版 */
 /* ////////////////////////////////// */
 /* ////////////////////////////////// */
 
-@import url("https://fonts.googleapis.com/css2?family=Rounded+Mplus+1c:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&display=swap");
 
 /* ////////////////////////////////// */
 /* 全体のスタイル */
 /* ////////////////////////////////// */
 :root {
-    --color-main: #c9834a;
-    --color-main-dark: #a8672f;
-    --color-main-light: #e0b78a;
-    --color-text: #4a4038;
-    --color-cream: #f6f1ea;
-    --color-income: #93bc5c;
-    --color-expense: #e04e4e;
+    /* メインの寒色（水色 → 青 → 紫） */
+    --color-aqua: #5ad4ea;
+    --color-main: #5b8cf5;
+    --color-main-dark: #3f5fd0;
+    --color-main-light: #a9c6ff;
+    --color-purple: #9b7bf2;
+
+    /* 文字色 */
+    --color-text: #27335c;
+    --color-text-sub: #6d7ca8;
+
+    /* 収入/支出（寒色のまま判別できるよう色相で区別） */
+    --color-income: #10aeb4;
+    --color-expense: #a05ce0;
+
+    /* ガラス表現用 */
+    --glass-bg: rgba(255, 255, 255, 0.45);
+    --glass-bg-strong: rgba(255, 255, 255, 0.62);
+    --glass-border: rgba(255, 255, 255, 0.7);
+    --glass-line: rgba(91, 140, 245, 0.22);
+    --glass-shadow: 0 8px 28px rgba(55, 85, 170, 0.18);
+    --glass-blur: blur(16px) saturate(165%);
 }
 
 body {
-    background-color: var(--color-cream);
+    /* ガラスの背後に透ける寒色グラデーション */
+    background:
+        linear-gradient(160deg, #e6f7ff 0%, #d8e8ff 38%, #e2dcff 72%, #f0e6ff 100%)
+        fixed;
     color: var(--color-text);
-    font-family: "Rounded Mplus 1c", "Hiragino Maru Gothic ProN", sans-serif;
+    font-family: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", "Rounded Mplus 1c", sans-serif;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* 背景のぼかし光球（ガラスの透明感を出すための“透けるもの”） */
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    z-index: -2;
+    border-radius: 50%;
+    filter: blur(70px);
+    pointer-events: none;
+}
+
+body::before {
+    width: 320px;
+    height: 320px;
+    top: -90px;
+    left: -80px;
+    background: radial-gradient(circle, rgba(90, 212, 234, 0.75), rgba(90, 212, 234, 0) 70%);
+    animation: float-blob 14s ease-in-out infinite;
+}
+
+body::after {
+    width: 380px;
+    height: 380px;
+    bottom: -120px;
+    right: -110px;
+    background: radial-gradient(circle, rgba(155, 123, 242, 0.7), rgba(155, 123, 242, 0) 70%);
+    animation: float-blob 18s ease-in-out infinite reverse;
+}
+
+@keyframes float-blob {
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+        transform: translate3d(24px, 30px, 0) scale(1.12);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body::before,
+    body::after {
+        animation: none;
+    }
+}
+
+/* 背景に散らばる肉球（猫要素） */
+main::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.1;
+    background-image:
+        url("/images/cat/paw-print-deco.svg"),
+        url("/images/cat/paw-print-deco.svg"),
+        url("/images/cat/paw-print-deco.svg");
+    background-repeat: no-repeat;
+    background-size: 90px, 58px, 120px;
+    background-position: 8% 18%, 88% 42%, 72% 86%;
 }
 
 /* ////////////////////////////////// */
 /* ヘッダー */
 /* ////////////////////////////////// */
 header {
-    background-color: var(--color-main);
+    background: linear-gradient(
+        120deg,
+        rgba(62, 190, 216, 0.82),
+        rgba(91, 140, 245, 0.82) 55%,
+        rgba(155, 123, 242, 0.82)
+    );
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
     color: #fff;
     padding: 15px;
     display: flex;
     align-items: center;
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 700;
     margin-bottom: 20px;
-    border-bottom: 4px solid #fff;
-    border-radius: 0 0 20px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-top: none;
+    border-radius: 0 0 24px 24px;
+    box-shadow: 0 10px 30px rgba(63, 95, 208, 0.28);
+    text-shadow: 0 1px 3px rgba(39, 51, 92, 0.25);
     position: relative;
+}
+
+/* ヘッダー上辺のガラスのハイライト */
+header::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 45%;
+    border-radius: 0 0 24px 24px;
+    background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+    pointer-events: none;
 }
 
 /* ウォレットアイコンを肉球アイコンに差し替え */
 header .bi-wallet2 {
     font-size: 0;
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     display: inline-block;
-    background-image: url("/images/cat/paw-print-header.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+    background-color: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    position: relative;
     flex-shrink: 0;
+    box-shadow: inset 0 1px 4px rgba(255, 255, 255, 0.6);
+}
+
+header .bi-wallet2::before {
+    content: "";
+    position: absolute;
+    inset: 7px;
+    background-color: #fff;
+    -webkit-mask-image: url("/images/cat/paw-print.svg");
+    mask-image: url("/images/cat/paw-print.svg");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-position: center;
+    mask-position: center;
 }
 
 header h1 {
     margin-left: 15px;
+    position: relative;
+    letter-spacing: 0.02em;
 }
 
 h2 {
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 700;
     margin-bottom: 10px;
     color: var(--color-main-dark);
 }
 
-h2 .bi-plus-circle {
+h2 .bi-plus-circle,
+h2 .bi-pencil {
     color: var(--color-main);
 }
 
 hr {
     margin-bottom: 20px;
     border: none;
-    border-top: 2px dashed #d9c3a8;
+    border-top: 2px dashed var(--glass-line);
 }
 
 /* ////////////////////////////////// */
@@ -84,12 +209,14 @@ hr {
 .inner-wrap {
     width: 90%;
     margin: 0 auto;
+    position: relative;
 }
 
 /* 期間移動 */
 .switch-term {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding-top: 5px;
     padding-bottom: 20px;
 }
@@ -99,37 +226,83 @@ hr {
     color: var(--color-main-dark);
 }
 
+.switch-term .switch-btn a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 12px rgba(55, 85, 170, 0.14);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.switch-term .switch-btn a:hover {
+    transform: scale(1.1);
+    background: var(--glass-bg-strong);
+}
+
 .switch-term .term {
-    font-weight: bold;
+    font-weight: 700;
     font-size: 18px;
+    color: var(--color-main-dark);
 }
 
 /* 今月の収支 */
 .card {
-    border-radius: 20px;
-    box-shadow: 0 4px 14px rgba(120, 90, 50, 0.15);
-    padding: 15px;
+    border-radius: 22px;
+    padding: 16px;
     font-size: 13px;
     margin-bottom: 20px;
-    background-color: #fff;
-    border: 2px solid #ede1d3;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow), inset 0 1px 1px rgba(255, 255, 255, 0.75);
+    position: relative;
+    overflow: hidden;
+}
+
+/* カード内に薄く浮かぶ肉球の透かし（猫要素） */
+.card::after {
+    content: "";
+    position: absolute;
+    right: -14px;
+    bottom: -18px;
+    width: 92px;
+    height: 92px;
+    opacity: 0.12;
+    background-color: var(--color-main);
+    -webkit-mask-image: url("/images/cat/paw-print.svg");
+    mask-image: url("/images/cat/paw-print.svg");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    transform: rotate(-18deg);
+    pointer-events: none;
 }
 
 .balance {
-    border-bottom: 2px dashed #e3d5c2;
+    border-bottom: 2px dashed var(--glass-line);
     margin-bottom: 10px;
+    position: relative;
 }
 
 .balance-plus {
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 26px;
+    font-weight: 700;
     padding: 10px 0;
     color: var(--color-income);
 }
 
 .balance-minus {
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 26px;
+    font-weight: 700;
     padding: 10px 0;
     color: var(--color-expense);
 }
@@ -138,6 +311,7 @@ hr {
     display: flex;
     justify-content: space-between;
     gap: 10px;
+    position: relative;
 }
 
 .income-expense {
@@ -145,34 +319,43 @@ hr {
 }
 
 .border {
-    border-left: 2px dashed #e3d5c2;
+    border-left: 2px dashed var(--glass-line);
 }
 
 .income-text {
     font-size: 16px;
     padding-top: 5px;
     color: var(--color-income);
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .expense-text {
     font-size: 16px;
     padding-top: 5px;
     color: var(--color-expense);
-    font-weight: bold;
+    font-weight: 700;
 }
 
 /* 週別収支カード */
 .card-title {
-    color: #9c8b7a;
+    color: var(--color-text-sub);
     font-size: 13px;
     margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.weekly-list {
+    position: relative;
 }
 
 .weekly-list li {
     display: flex;
     justify-content: space-between;
-    padding: 6px 0;
+    padding: 7px 0;
+}
+
+.weekly-list li + li {
+    border-top: 1px dashed var(--glass-line);
 }
 
 .weekly-list li .income-text,
@@ -183,7 +366,7 @@ hr {
 
 /* 日別収支リスト */
 .daily-list {
-    margin-bottom: 80px;
+    margin-bottom: 90px;
 }
 
 .day-group {
@@ -195,23 +378,42 @@ hr {
     justify-content: space-between;
     padding: 0 5px 8px;
     font-size: 13px;
-    color: #9c8b7a;
+    color: var(--color-text-sub);
+}
+
+.day-header .day-date {
+    display: inline-block;
+    padding: 2px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.5);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    color: var(--color-main-dark);
+    font-weight: 700;
 }
 
 .transaction-list {
-    background-color: #fff;
-    border-radius: 20px;
-    box-shadow: 0 4px 14px rgba(120, 90, 50, 0.15);
-    border: 2px solid #ede1d3;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    border-radius: 22px;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow), inset 0 1px 1px rgba(255, 255, 255, 0.75);
     overflow: hidden;
 }
 
 .transaction-item {
-    border-bottom: 2px dashed #ede1d3;
+    border-bottom: 1px dashed var(--glass-line);
+    transition: background-color 0.2s ease;
 }
 
 .transaction-item:last-child {
     border-bottom: none;
+}
+
+.transaction-item:hover {
+    background-color: rgba(255, 255, 255, 0.35);
 }
 
 .transaction-item a {
@@ -230,15 +432,17 @@ hr {
     border-radius: 50%;
     flex-shrink: 0;
     font-size: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.8);
 }
 
 .transaction-icon-expense {
-    background-color: #ede1d3;
+    background: linear-gradient(140deg, rgba(160, 92, 224, 0.22), rgba(155, 123, 242, 0.32));
     color: var(--color-expense);
 }
 
 .transaction-icon-income {
-    background-color: #dff3ea;
+    background: linear-gradient(140deg, rgba(16, 174, 180, 0.2), rgba(90, 212, 234, 0.32));
     color: var(--color-income);
 }
 
@@ -249,17 +453,17 @@ hr {
 
 .transaction-category {
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .transaction-memo {
     font-size: 12px;
-    color: #9c8b7a;
+    color: var(--color-text-sub);
 }
 
 .transaction-amount {
     font-size: 15px;
-    font-weight: bold;
+    font-weight: 700;
     padding-top: 0;
     white-space: nowrap;
 }
@@ -269,21 +473,51 @@ hr {
     position: fixed;
     right: 20px;
     bottom: 20px;
-    width: 56px;
-    height: 56px;
+    width: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background-color: var(--color-main);
+    background: linear-gradient(
+        140deg,
+        rgba(56, 180, 206, 0.95),
+        rgba(91, 140, 245, 0.95) 50%,
+        rgba(150, 115, 242, 0.95)
+    );
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     color: #fff;
     font-size: 22px;
-    box-shadow: 0 4px 14px rgba(120, 90, 50, 0.4);
+    box-shadow: 0 10px 26px rgba(63, 95, 208, 0.42), inset 0 1px 2px rgba(255, 255, 255, 0.8);
     transition: transform 0.2s ease;
 }
 
 a.add-btn:hover {
-    transform: scale(1.3);
+    transform: scale(1.12);
+}
+
+/* ボタン内に透ける肉球（猫要素） */
+.add-btn::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    opacity: 0.32;
+    background-color: #fff;
+    -webkit-mask-image: url("/images/cat/paw-print.svg");
+    mask-image: url("/images/cat/paw-print.svg");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-position: center;
+    mask-position: center;
+    pointer-events: none;
+}
+
+.add-btn i {
+    position: relative;
 }
 
 .add-btn::after {
@@ -291,22 +525,24 @@ a.add-btn:hover {
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    box-shadow: 0 0 0 4px #fff inset;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.55) inset;
     pointer-events: none;
 }
 
 /* バリデーションエラー */
 .alert {
     padding: 12px 15px;
-    border-radius: 14px;
+    border-radius: 16px;
     margin-bottom: 20px;
     font-size: 14px;
 }
 
 .alert-danger {
-    background-color: #ede1d3;
-    border: 2px dashed var(--color-expense);
-    color: #8f4a34;
+    background: rgba(160, 92, 224, 0.14);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 2px dashed rgba(160, 92, 224, 0.6);
+    color: #6b2e9e;
 }
 
 .alert ul {
@@ -331,7 +567,22 @@ a.add-btn:hover {
 }
 
 .back-to-home a {
-    color: var(--color-main-dark)
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-main-dark);
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 12px rgba(55, 85, 170, 0.14);
+    transition: background-color 0.2s ease;
+}
+
+.back-to-home a:hover {
+    background: var(--glass-bg-strong);
 }
 
 .back-to-home span {
@@ -341,10 +592,15 @@ a.add-btn:hover {
 /* 収入/支出選択ボタン */
 .income-expense-btn-area {
     display: flex;
-    border: 2px solid #e3d5c2;
-    border-radius: 14px;
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
     overflow: hidden;
     margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.35);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.7);
+    position: relative;
 }
 
 .type-radio {
@@ -360,21 +616,24 @@ a.add-btn:hover {
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 6px;
-    font-weight: bold;
-    color: #9c8b7a;
+    padding: 8px 6px;
+    font-weight: 700;
+    color: var(--color-text-sub);
     cursor: pointer;
     font-size: 16px;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .type-radio:checked + .type-income-btn {
-    background-color: var(--color-income);
+    background: linear-gradient(135deg, rgba(45, 190, 205, 0.97), rgba(13, 150, 158, 0.97));
     color: #fff;
+    text-shadow: 0 1px 2px rgba(39, 51, 92, 0.2);
 }
 
 .type-radio:checked + .type-expense-btn {
-    background-color: var(--color-expense);
+    background: linear-gradient(135deg, rgba(155, 123, 242, 0.95), rgba(160, 92, 224, 0.95));
     color: #fff;
+    text-shadow: 0 1px 2px rgba(39, 51, 92, 0.2);
 }
 
 .type-radio:focus-visible + .type-btn {
@@ -387,26 +646,32 @@ a.add-btn:hover {
     font-size: 14px;
     margin-bottom: 8px;
     color: var(--color-text);
+    font-weight: 500;
 }
 
 .amount-input-area {
     display: flex;
     align-items: center;
     gap: 8px;
-    border: 2px solid #e3d5c2;
-    border-radius: 14px;
-    padding: 6px 15px;
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 8px 15px;
     margin-bottom: 20px;
-    background-color: #fff;
+    background: rgba(255, 255, 255, 0.5);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.8);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .amount-input-area:focus-within {
-    border: 2px solid var(--color-main);
+    border-color: var(--color-main);
+    box-shadow: 0 0 0 3px rgba(91, 140, 245, 0.22);
 }
 
 .currency-symbol {
     color: var(--color-main-dark);
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .amount-input {
@@ -418,11 +683,16 @@ a.add-btn:hover {
     color: var(--color-text);
 }
 
+.amount-input::placeholder {
+    color: rgba(109, 124, 168, 0.6);
+}
+
 /* カテゴリー選択 */
 .category-btn-area {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 10px;
+    position: relative;
 }
 
 .category-radio {
@@ -435,19 +705,28 @@ a.add-btn:hover {
 .category-btn {
     display: inline-block;
     padding: 8px 16px;
-    border: 2px solid #e3d5c2;
+    border: 1px solid var(--glass-border);
     border-radius: 999px;
-    color: #9c8b7a;
+    color: var(--color-text-sub);
     cursor: pointer;
     margin-right: 5px;
     margin-bottom: 10px;
-    background-color: #fff;
+    background: rgba(255, 255, 255, 0.45);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.8);
+    transition: transform 0.15s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.category-btn:hover {
+    transform: translateY(-1px);
 }
 
 .category-radio:checked + .category-btn {
-    background-color: var(--color-main);
-    border-color: var(--color-main);
+    background: linear-gradient(135deg, rgba(74, 150, 230, 0.97), rgba(140, 100, 235, 0.97));
+    border-color: rgba(255, 255, 255, 0.8);
     color: #fff;
+    box-shadow: 0 6px 16px rgba(63, 95, 208, 0.3);
 }
 
 .category-radio:focus-visible + .category-btn {
@@ -457,56 +736,98 @@ a.add-btn:hover {
 
 /* 日付 */
 .date-input {
-    border: 2px solid #e3d5c2;
-    border-radius: 14px;
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
     padding: 10px 15px;
     margin-bottom: 20px;
     width: 100%;
-    background-color: #fff;
+    background: rgba(255, 255, 255, 0.5);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.8);
     color: var(--color-text);
+    color-scheme: light;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* メモ */
 .memo-input {
-    border: 2px solid #e3d5c2;
-    border-radius: 14px;
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
     padding: 10px 15px;
     margin-bottom: 20px;
     width: 100%;
-    background-color: #fff;
+    background: rgba(255, 255, 255, 0.5);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.8);
     color: var(--color-text);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.date-input:focus,
+.memo-input:focus {
+    outline: none;
+    border-color: var(--color-main);
+    box-shadow: 0 0 0 3px rgba(91, 140, 245, 0.22);
 }
 
 /* 登録ボタン */
 .btn-large {
-    background-color: var(--color-main);
-    color: white;
-    padding: 10px;
-    border-radius: 14px;
+    background: linear-gradient(
+        120deg,
+        rgba(56, 180, 206, 0.97),
+        rgba(91, 140, 245, 0.97) 50%,
+        rgba(150, 115, 242, 0.97)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    color: #fff;
+    padding: 12px;
+    border-radius: 16px;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 700;
     width: 100%;
-    transition: filter 0.15s ease;
+    box-shadow: 0 8px 20px rgba(63, 95, 208, 0.32), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+    text-shadow: 0 1px 2px rgba(39, 51, 92, 0.22);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 button.btn-large:hover {
-    filter: brightness(0.92);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(63, 95, 208, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .btn-delete {
-    border: 2px solid var(--color-expense);
+    border: 2px solid rgba(160, 92, 224, 0.65);
     color: var(--color-expense);
-    padding: 10px;
-    border-radius: 14px;
+    padding: 12px;
+    border-radius: 16px;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 700;
     width: 100%;
+    background: rgba(255, 255, 255, 0.35);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
     transition: all 0.2s ease;
     margin-top: 20px;
 }
 
 .btn-delete:hover {
-    border: 2px solid white;
-    background-color: var(--color-expense);
-    color: white;
+    border-color: rgba(255, 255, 255, 0.8);
+    background: linear-gradient(135deg, rgba(155, 123, 242, 0.95), rgba(160, 92, 224, 0.95));
+    color: #fff;
+}
+
+/* ////////////////////////////////// */
+/* backdrop-filter 非対応ブラウザ向けのフォールバック */
+/* ////////////////////////////////// */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .card,
+    .transaction-list {
+        background: rgba(255, 255, 255, 0.82);
+    }
+
+    header {
+        background: linear-gradient(120deg, #5ad4ea, #5b8cf5 55%, #9b7bf2);
+    }
 }
