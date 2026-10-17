@@ -740,7 +740,6 @@ a.add-btn:hover {
     border-radius: 16px;
     padding: 10px 15px;
     margin-bottom: 20px;
-    width: 100%;
     background: rgba(255, 255, 255, 0.5);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
@@ -752,6 +751,7 @@ a.add-btn:hover {
 
 /* メモ */
 .memo-input {
+    font-size: 16px;
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     padding: 10px 15px;
@@ -766,7 +766,8 @@ a.add-btn:hover {
 }
 
 .date-input:focus,
-.memo-input:focus {
+.memo-input:focus,
+.auth-input:focus {
     outline: none;
     border-color: var(--color-main);
     box-shadow: 0 0 0 3px rgba(91, 140, 245, 0.22);
@@ -816,6 +817,101 @@ button.btn-large:hover {
     border-color: rgba(255, 255, 255, 0.8);
     background: linear-gradient(135deg, rgba(155, 123, 242, 0.95), rgba(160, 92, 224, 0.95));
     color: #fff;
+}
+
+/* ////////////////////////////////// */
+/* ログイン / 新規登録画面 */
+/* ////////////////////////////////// */
+
+/* メールアドレス・パスワードなどの入力欄 */
+.auth-input {
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.8);
+    color: var(--color-text);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-input::placeholder {
+    color: rgba(109, 124, 168, 0.6);
+}
+
+/* 「ログイン状態を保持」のチェックボックス行 */
+.remember-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: var(--color-text-sub);
+}
+
+.remember-row input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--color-main);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.remember-row label {
+    cursor: pointer;
+}
+
+/* 項目名クラスを流用した場合に、下マージンで縦位置がずれるのを打ち消す */
+.remember-row .input-title {
+    margin-bottom: 0;
+}
+
+/* 画面下部のリンク（ログイン⇄新規登録の行き来） */
+.auth-link {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 2px dashed var(--glass-line);
+    text-align: center;
+    font-size: 14px;
+    color: var(--color-text-sub);
+    position: relative;
+}
+
+.auth-link a {
+    color: var(--color-main-dark);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* ヘッダーのログアウトボタン */
+.logout-form {
+    margin-left: auto;
+    position: relative;
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.22);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.5);
+    transition: background-color 0.2s ease;
+}
+
+.logout-btn:hover {
+    background: rgba(255, 255, 255, 0.38);
 }
 
 /* ////////////////////////////////// */
