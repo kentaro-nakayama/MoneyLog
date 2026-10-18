@@ -3,18 +3,7 @@
 @section('content')
 
     <body class="home">
-        <header>
-            <i class="bi bi-wallet2 fs-1"></i>
-            <h1>MoneyLog</h1>
-            @auth
-                <form class="logout-form" action="{{ url('/logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="logout-btn">
-                        <i class="bi bi-box-arrow-right"></i>ログアウト
-                    </button>
-                </form>
-            @endauth
-        </header>
+        @include('common.header')
         <main>
             <div class="inner-wrap">
                 <!-- 期間移動 -->

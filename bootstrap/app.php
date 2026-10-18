@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // HTTPSだったかを判断させる。プロキシのない自前のサーバー(Nginx)ではヘッダーが付かないので、
         // 実際にアクセスされたスキーム(http/https)のままURLが作られる。
         $middleware->trustProxies(at: '*');
+        $middleware->redirectGuestsTo('/login');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

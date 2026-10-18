@@ -888,9 +888,46 @@ button.btn-large:hover {
 }
 
 /* ヘッダーのログアウトボタン */
-.logout-form {
+/* ヘッダー右側。ユーザー名とログアウトボタンをまとめて右端に寄せる */
+.header-user {
     margin-left: auto;
+    /* タイトルとくっつかないように左に余白を空ける */
+    padding-left: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.user-name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* 長い名前でもログアウトボタンを押し出さないように、はみ出す分は … にする。
+   text-overflow は flex コンテナ直下のテキストには効かないので、名前だけを包んで掛ける */
+.user-name-text {
+    max-width: 7em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.logout-form {
     position: relative;
+    flex-shrink: 0;
+}
+
+/* 画面が狭いと名前の入る余地がないので、名前は隠してログアウトボタンを優先する */
+@media (max-width: 360px) {
+    .user-name {
+        display: none;
+    }
 }
 
 .logout-btn {

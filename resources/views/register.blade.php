@@ -2,10 +2,7 @@
 
 @section('content')
 <body class="home">
-    <header>
-        <i class="bi bi-wallet2 fs-1"></i>
-        <h1>MoneyLog</h1>
-    </header>
+    @include('common.header')
     <main>
         <div class="inner-wrap">
             <div class="back-to-home">

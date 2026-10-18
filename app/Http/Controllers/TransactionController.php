@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Transaction;
 
 class TransactionController extends Controller
 {
@@ -21,7 +20,9 @@ class TransactionController extends Controller
             'date'=> 'required|date',
             'memo'=>'nullable|string'
         ]);
-        $transaction = Transaction::create([
+
+        // ログイン中のユーザー経由で作ると、user_id が自動で入る
+        $request->user()->transactions()->create([
             'type'=> $request->type,
             'amount'=> $request->amount,
             'category'=> $request->category,
@@ -32,8 +33,8 @@ class TransactionController extends Controller
     }
 
     // 編集フォームを表示
-    public function showEditForm($id) {
-        $transaction = Transaction::findOrFail($id);
+    public function showEditForm(Request $request, $id) {
+        $transaction = $this->findOwnedTransaction($request, $id);
         return view('edit', compact('transaction'));
     }
 
@@ -48,7 +49,7 @@ class TransactionController extends Controller
         ]);
 
         // 編集対象のデータを探して、送信された内容で上書きする
-        $transaction = Transaction::findOrFail($id);
+        $transaction = $this->findOwnedTransaction($request, $id);
         $transaction->update([
             'type'=> $request->type,
             'amount'=> $request->amount,
@@ -61,10 +62,18 @@ class TransactionController extends Controller
     }
 
     // 削除
-    public function deleteTransaction($id) {
-        $transaction = Transaction::findOrFail($id);
+    public function deleteTransaction(Request $request, $id) {
+        $transaction = $this->findOwnedTransaction($request, $id);
         $transaction->delete();
 
         return redirect('/');
+    }
+
+    /**
+     * ログイン中のユーザー自身の取引だけを id で探す。
+     * 他人の id を指定された場合は見つからない扱いになり、404 になる。
+     */
+    private function findOwnedTransaction(Request $request, $id) {
+        return $request->user()->transactions()->findOrFail($id);
     }
 }

@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use Carbon\Carbon;
+use App\Models\User;
 
 class HomeController extends Controller
 {
-    public function showHome(Request $request) {
+    public function showHome(Request $request)
+    {
+        $user = $request->user();
         // URLに ?year=2026&month=9 のようなパラメータが付いていればその年月を使う。
         // 付いていなければ「今日」の年月を使う（Carbon::now()で今日の日付が取れる）。
         $year = $request->query('year', Carbon::now()->year);
@@ -24,10 +27,10 @@ class HomeController extends Controller
 
         // 上で作った4つの関数を呼び出して、ビューに渡すデータを準備する
         // $this は現在の HomeController インスタンスを指し、その private メソッドを呼び出す。
-        $monthlyTotal = $this->calculateMonthlyTotal($year, $month);
-        $weeklyTotal = $this->calculateWeeklyTotal($today->year, $today->month, $today->day);
-        $weeklyBreakdown = $this->calculateWeeklyBreakdownInMonth($year, $month);
-        $dailyTransactions = $this->getDailyTransactions($year, $month);
+        $monthlyTotal = $this->calculateMonthlyTotal($user, $year, $month);
+        $weeklyTotal = $this->calculateWeeklyTotal($user, $today->year, $today->month, $today->day);
+        $weeklyBreakdown = $this->calculateWeeklyBreakdownInMonth($user, $year, $month);
+        $dailyTransactions = $this->getDailyTransactions($user, $year, $month);
 
         return view('home', [
             'year' => $year,
@@ -54,7 +57,7 @@ class HomeController extends Controller
      * @return array
      * $year, $month で指定した「1ヶ月分」の収入合計・支出合計・差引収支を返す。
      */
-    private function calculateMonthlyTotal($year, $month)
+    private function calculateMonthlyTotal(User $user, $year, $month)
     {
         // Carbon::create(年, 月, 日) で「その年月日」を表すCarbonインスタンス（日付オブジェクト）を作れる
         $firstDayOfMonth = Carbon::create($year, $month, 1);
@@ -68,12 +71,14 @@ class HomeController extends Controller
         $endDate = $lastDayOfMonth->toDateString();
 
         // 指定期間の「収入」だけを合計する
-        $income = Transaction::whereBetween('date', [$startDate, $endDate])
+        $income = $user->transactions()
+            ->whereBetween('date', [$startDate, $endDate])
             ->where('type', '収入')
             ->sum('amount');
 
         // 指定期間の「支出」だけを合計する
-        $expense = Transaction::whereBetween('date', [$startDate, $endDate])
+        $expense = $user->transactions()
+            ->whereBetween('date', [$startDate, $endDate])
             ->where('type', '支出')
             ->sum('amount');
 
@@ -89,7 +94,7 @@ class HomeController extends Controller
      *
      * $year, $month, $day で指定した日を含む「1週間分」の収入合計・支出合計・差引収支を返す。
      */
-    private function calculateWeeklyTotal($year, $month, $day)
+    private function calculateWeeklyTotal(User $user, $year, $month, $day)
     {
         // 基準になる日付を作る
         $baseDate = Carbon::create($year, $month, $day);
@@ -101,11 +106,13 @@ class HomeController extends Controller
         $startDate = $weekStart->toDateString();
         $endDate = $weekEnd->toDateString();
 
-        $income = Transaction::whereBetween('date', [$startDate, $endDate])
+        $income = $user->transactions()
+            ->whereBetween('date', [$startDate, $endDate])
             ->where('type', '収入')
             ->sum('amount');
 
-        $expense = Transaction::whereBetween('date', [$startDate, $endDate])
+        $expense = $user->transactions()
+            ->whereBetween('date', [$startDate, $endDate])
             ->where('type', '支出')
             ->sum('amount');
 
@@ -124,7 +131,7 @@ class HomeController extends Controller
      * $year, $month で指定した月を「週ごと」に区切って、各週の収入・支出・差引収支をリストで返す。
      * 例: 9/1〜9/7, 9/8〜9/14, ... のように月をまたぐ週も含めてすべて計算する。
      */
-    private function calculateWeeklyBreakdownInMonth($year, $month)
+    private function calculateWeeklyBreakdownInMonth(User $user, $year, $month)
     {
         $firstDayOfMonth = Carbon::create($year, $month, 1);
         $lastDayOfMonth = $firstDayOfMonth->copy()->endOfMonth();
@@ -142,11 +149,13 @@ class HomeController extends Controller
             $startDate = $weekStart->toDateString();
             $endDate = $weekEnd->toDateString();
 
-            $income = Transaction::whereBetween('date', [$startDate, $endDate])
+            $income = $user->transactions()
+                ->whereBetween('date', [$startDate, $endDate])
                 ->where('type', '収入')
                 ->sum('amount');
 
-            $expense = Transaction::whereBetween('date', [$startDate, $endDate])
+            $expense = $user->transactions()
+                ->whereBetween('date', [$startDate, $endDate])
                 ->where('type', '支出')
                 ->sum('amount');
 
@@ -163,24 +172,24 @@ class HomeController extends Controller
             $weekStart = $weekStart->copy()->addWeek();
         }
 
-    // $weeklyBreakdownの内容
-    // [
-    //     [
-    //         'start' => '8/31',
-    //         'end' => '9/6',
-    //         'income' => 300000,
-    //         'expense' => 120000,
-    //         'balance' => 180000,
-    //     ],
-    //     [
-    //         'start' => '9/7',
-    //         'end' => '9/13',
-    //         'income' => 50000,
-    //         'expense' => 30000,
-    //         'balance' => 20000,
-    //     ],
-    // ]
-    
+        // $weeklyBreakdownの内容
+        // [
+        //     [
+        //         'start' => '8/31',
+        //         'end' => '9/6',
+        //         'income' => 300000,
+        //         'expense' => 120000,
+        //         'balance' => 180000,
+        //     ],
+        //     [
+        //         'start' => '9/7',
+        //         'end' => '9/13',
+        //         'income' => 50000,
+        //         'expense' => 30000,
+        //         'balance' => 20000,
+        //     ],
+        // ]
+
         return $weeklyBreakdown;
     }
 
@@ -190,7 +199,7 @@ class HomeController extends Controller
      * $year, $month で指定した月の取引を全部取得し、日付ごとにグループ分けして返す。
      * 戻り値の形: ['2026-09-29' => [取引1, 取引2, ...], '2026-09-25' => [...], ...]
      */
-    private function getDailyTransactions($year, $month)
+    private function getDailyTransactions(User $user, $year, $month)
     {
         $firstDayOfMonth = Carbon::create($year, $month, 1);
         $lastDayOfMonth = $firstDayOfMonth->copy()->endOfMonth();
@@ -199,7 +208,8 @@ class HomeController extends Controller
         $endDate = $lastDayOfMonth->toDateString();
 
         // 新しい日付が上に来るように、日付の新しい順に並び替えて取得する
-        $transactions = Transaction::whereBetween('date', [$startDate, $endDate])
+        $transactions = $user->transactions()
+            ->whereBetween('date', [$startDate, $endDate])
             ->orderBy('date', 'desc')
             ->orderBy('id', 'desc')
             ->get();

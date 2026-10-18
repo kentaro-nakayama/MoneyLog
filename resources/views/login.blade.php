@@ -3,10 +3,7 @@
 @section('content')
 
     <body class="home">
-        <header>
-            <i class="bi bi-wallet2 fs-1"></i>
-            <h1>MoneyLog</h1>
-        </header>
+        @include('common.header')
         <main>
             <div class="inner-wrap">
                 <div class="card">
@@ -21,7 +18,7 @@
                             </ul>
                         </div>
                     @endif
-                    <form action="{{ url('/login') }}" method="POST">
+                    <form action="{{ route('login.store') }}" method="POST">
                         @csrf
                         <div>
                             <label class="input-title" for="email">メールアドレス</label>
@@ -40,7 +37,7 @@
                         <button class="btn-large" type="submit">ログイン</button>
                     </form>
                     <div class="auth-link">
-                        アカウントをお持ちでない方は <a href="{{ url('/signup') }}">新規登録</a>
+                        アカウントをお持ちでない方は <a href="{{ route('signup') }}">新規登録</a>
                     </div>
                 </div>
             </div>
