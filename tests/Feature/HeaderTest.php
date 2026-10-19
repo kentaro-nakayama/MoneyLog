@@ -40,6 +40,43 @@ class HeaderTest extends TestCase
         $response->assertSee('action="' . url('/logout') . '"', false);
     }
 
+    /**
+     * ヘッダーのタイトルがホーム画面へのリンクになっていること。
+     */
+    #[DataProvider('pagesBehindLogin')]
+    public function test_the_title_links_to_the_home_page(string $uri): void
+    {
+        $user = User::factory()->create();
+        $transaction = Transaction::factory()->for($user)->create();
+
+        $response = $this->actingAs($user)->get(sprintf($uri, $transaction->id));
+
+        $response->assertOk();
+        $response->assertSee('<a href="' . route('home') . '" class="home-link">', false);
+        $response->assertSee('MoneyLog');
+    }
+
+    /**
+     * 未ログインの画面には、押してもログイン画面に戻されるだけのリンクを出さない。
+     */
+    public function test_login_and_signup_pages_have_no_home_link(): void
+    {
+        $this->get('/login')->assertDontSee('home-link');
+        $this->get('/signup')->assertDontSee('home-link');
+    }
+
+    /**
+     * ヘッダーから戻れるようになったので、画面ごとの「ホーム」ボタンは置かない。
+     */
+    public function test_pages_behind_login_have_no_separate_back_to_home_button(): void
+    {
+        $user = User::factory()->create();
+        $transaction = Transaction::factory()->for($user)->create();
+
+        $this->actingAs($user)->get('/register_form')->assertDontSee('back-to-home');
+        $this->actingAs($user)->get("/edit_form/{$transaction->id}")->assertDontSee('back-to-home');
+    }
+
     public function test_login_and_signup_pages_have_no_logout_button(): void
     {
         $this->get('/login')->assertDontSee('ログアウト');

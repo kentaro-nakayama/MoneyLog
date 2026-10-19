@@ -185,6 +185,19 @@ header h1 {
     letter-spacing: 0.02em;
 }
 
+/* アイコンとタイトルをまとめてホームへのリンクにする。
+   リンクにすると header の flex アイテムが1つになるので、中でも flex を組み直す */
+.home-link {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    transition: opacity 0.2s ease;
+}
+
+.home-link:hover {
+    opacity: 0.85;
+}
+
 h2 {
     font-size: 18px;
     font-weight: 700;
@@ -561,33 +574,6 @@ a.add-btn:hover {
 /* ////////////////////////////////// */
 /* 新規登録画面 */
 /* ////////////////////////////////// */
-
-.back-to-home {
-    margin-bottom: 20px;
-}
-
-.back-to-home a {
-    display: inline-flex;
-    align-items: center;
-    color: var(--color-main-dark);
-    font-weight: 500;
-    padding: 6px 14px;
-    border-radius: 999px;
-    background: var(--glass-bg);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--glass-border);
-    box-shadow: 0 4px 12px rgba(55, 85, 170, 0.14);
-    transition: background-color 0.2s ease;
-}
-
-.back-to-home a:hover {
-    background: var(--glass-bg-strong);
-}
-
-.back-to-home span {
-    margin-left: 5px;
-}
 
 /* 収入/支出選択ボタン */
 .income-expense-btn-area {
