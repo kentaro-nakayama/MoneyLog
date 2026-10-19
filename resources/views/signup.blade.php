@@ -6,7 +6,7 @@
         @include('common.header')
         <main>
             <div class="inner-wrap">
-                <div class="card">
+                <div class="card auth-card">
                     <h2><i class="bi bi-box-arrow-in-right"></i> サインアップ</h2>
                     <hr>
                     @if ($errors->any())
