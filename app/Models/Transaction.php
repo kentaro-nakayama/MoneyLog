@@ -20,7 +20,21 @@ class Transaction extends Model
         'memo',
     ];
 
-    // TODO: casts()の追加
+    /**
+     * 属性の型変換の設定。
+     *
+     * date を Carbon にしておくと、日付の計算や書式変換をそのまま書ける。
+     * amount は、フォームから文字列で送られてきても整数として扱えるようにする。
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'amount' => 'integer',
+            'date' => 'date',
+        ];
+    }
 
     public function user(): BelongsTo
     {

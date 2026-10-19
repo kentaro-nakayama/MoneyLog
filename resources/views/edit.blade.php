@@ -69,7 +69,7 @@
                     <!-- 日付 -->
                     <div>
                         <p class="input-title">日付(必須)</p>
-                        <input type="date" name="date" class="date-input" value="{{ $transaction->date }}" required>
+                        <input type="date" name="date" class="date-input" value="{{ $transaction->date->format('Y-m-d') }}" required>
                     </div>
                     <!-- メモ -->
                     <div>

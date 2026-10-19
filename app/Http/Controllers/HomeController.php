@@ -217,8 +217,9 @@ class HomeController extends Controller
         // 日付ごとにグループ分けする
         $dailyTransactions = [];
         foreach ($transactions as $transaction) {
-            // date カラムには casts() を付けていないので、そのまま 'Y-m-d' 形式の文字列として使える
-            $dateKey = $transaction->date;
+            // date は casts() で Carbon になっているので、配列のキーに使えるよう
+            // toDateString() で 'Y-m-d' 形式の文字列に戻す
+            $dateKey = $transaction->date->toDateString();
 
             // まだこの日付のキーが無ければ、空の配列を作っておく
             if (!isset($dailyTransactions[$dateKey])) {
