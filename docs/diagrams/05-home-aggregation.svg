@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 860" width="960" height="860" role="img" aria-label="ホーム画面の集計処理">
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="#55657a"/></marker>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP","Yu Gothic",Arial,sans-serif}
+.ttl{font-size:21px;font-weight:700;fill:#E6EDF3}
+.sub{font-size:13px;fill:#8695A4}
+.sec{font-size:13px;font-weight:700;fill:#A9B7C5}
+.h{font-size:14.5px;font-weight:700;fill:#E9EFF5}
+.hs{font-size:13px;font-weight:700;fill:#E9EFF5}
+.b{font-size:12px;fill:#A7B4C2}
+.m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Courier New",monospace;font-size:11.5px;fill:#9BAAB9}
+.m2{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Courier New",monospace;font-size:10.5px;fill:#9BAAB9}
+.lab{font-size:11.5px;fill:#8695A4}
+.chip{fill:#1D2530;stroke:#39434F}
+.chiptx{font-size:12px;fill:#AEBAC6}
+.panel{fill:#12171E;stroke:#232B36}
+.node{fill:#1A212A;stroke:#333D4A}
+.ar{fill:none;stroke:#55657a;stroke-width:1.5;marker-end:url(#ah)}
+.ln{fill:none;stroke:#55657a;stroke-width:1.5}
+</style>
+</defs>
+<rect width="960" height="860" fill="#0E1116"/>
+<text class="ttl" x="32" y="48">MoneyLog 構成図 ⑤｜機能詳細：ホーム画面の集計</text>
+<text class="sub" x="32" y="72">HomeController::showHome() が 4 つの集計を行い、1 画面分のデータをまとめてビューへ渡す</text>
+
+<rect class="node" x="330" y="104" width="300" height="52" rx="10"/>
+<text class="m" x="480" y="135" text-anchor="middle">GET /（?year=2026&amp;month=9）</text>
+<path class="ar" d="M480,156 V182"/>
+
+<rect class="panel" x="250" y="184" width="460" height="84" rx="12"/>
+<text class="h" x="268" y="210">HomeController::showHome()</text>
+<text class="b" x="268" y="232">① 表示する年月を決める（指定が無ければ今日の年月）</text>
+<text class="b" x="268" y="252">② 前の月・次の月を計算する（期間移動の矢印用）</text>
+
+<path class="ln" d="M480,268 V296"/>
+<path class="ln" d="M132,296 H828"/>
+<path class="ar" d="M132,296 V318"/>
+<path class="ar" d="M364,296 V318"/>
+<path class="ar" d="M596,296 V318"/>
+<path class="ar" d="M828,296 V318"/>
+
+<rect class="node" x="32" y="320" width="200" height="190" rx="10"/>
+<rect x="33" y="332" width="3.5" height="166" rx="2" fill="#3FB950"/>
+<text class="hs" x="50" y="344">① 月別の集計</text>
+<text class="m2" x="50" y="366">calculateMonthlyTotal()</text>
+<text class="b" x="50" y="406">月初〜月末が対象</text>
+<text class="b" x="50" y="426">収入だけを合計</text>
+<text class="b" x="50" y="446">支出だけを合計</text>
+<text class="b" x="50" y="466">差引 ＝ 収入 − 支出</text>
+<text class="b" x="50" y="492">→ 今月の収支カード</text>
+
+<rect class="node" x="264" y="320" width="200" height="190" rx="10"/>
+<rect x="265" y="332" width="3.5" height="166" rx="2" fill="#58A6FF"/>
+<text class="hs" x="282" y="344">② 今週の集計</text>
+<text class="m2" x="282" y="366">calculateWeeklyTotal()</text>
+<text class="b" x="282" y="406">表示中の月に関係なく</text>
+<text class="b" x="282" y="426">今日を含む週が対象</text>
+<text class="b" x="282" y="446">月曜〜日曜で区切る</text>
+<text class="b" x="282" y="466">収入・支出・差引</text>
+<text class="b" x="282" y="492">→ 今週の収支</text>
+
+<rect class="node" x="496" y="320" width="200" height="190" rx="10"/>
+<rect x="497" y="332" width="3.5" height="166" rx="2" fill="#BC8CFF"/>
+<text class="hs" x="514" y="344">③ 週別の内訳</text>
+<text class="m2" x="514" y="366">calculateWeekly</text>
+<text class="m2" x="514" y="382">BreakdownInMonth()</text>
+<text class="b" x="514" y="406">1日を含む月曜から</text>
+<text class="b" x="514" y="426">月末まで1週ずつ繰り返す</text>
+<text class="b" x="514" y="446">週ごとの配列を作る</text>
+<text class="b" x="514" y="466">月をまたぐ週も含める</text>
+<text class="b" x="514" y="492">→ 週別収支カード</text>
+
+<rect class="node" x="728" y="320" width="200" height="190" rx="10"/>
+<rect x="729" y="332" width="3.5" height="166" rx="2" fill="#FFA657"/>
+<text class="hs" x="746" y="344">④ 日別の一覧</text>
+<text class="m2" x="746" y="366">getDailyTransactions()</text>
+<text class="b" x="746" y="406">月内の取引を取得</text>
+<text class="m2" x="746" y="426">date desc, id desc 順</text>
+<text class="b" x="746" y="446">日付ごとにグループ化</text>
+<text class="b" x="746" y="466">カテゴリ・メモ付き</text>
+<text class="b" x="746" y="492">→ 日別収支リスト</text>
+
+<path class="ar" d="M132,510 V544"/>
+<path class="ar" d="M364,510 V544"/>
+<path class="ar" d="M596,510 V544"/>
+<path class="ar" d="M828,510 V544"/>
+
+<rect class="panel" x="32" y="546" width="896" height="56" rx="10"/>
+<rect x="33" y="558" width="3.5" height="32" rx="2" fill="#D29922"/>
+<text class="b" x="50" y="580">どの集計も $user-&gt;transactions() から始める ＝ ログイン中のユーザーの取引だけが対象（hasMany による絞り込み）</text>
+<path class="ar" d="M480,602 V634"/>
+
+<rect class="node" x="280" y="636" width="400" height="56" rx="10"/>
+<text class="h" x="480" y="671" text-anchor="middle">MySQL ／ transactions テーブル</text>
+<path class="ar" d="M480,692 V722"/>
+<text class="lab" x="492" y="712">集計結果</text>
+
+<rect class="panel" x="32" y="724" width="896" height="96" rx="12"/>
+<text class="h" x="50" y="752">view('home', [...]) → home.blade.php が HTML を組み立てる</text>
+<rect class="chip" x="50" y="770" width="112" height="26" rx="13"/><text class="chiptx" x="106" y="787" text-anchor="middle">期間移動の矢印</text>
+<rect class="chip" x="172" y="770" width="124" height="26" rx="13"/><text class="chiptx" x="234" y="787" text-anchor="middle">今月の収支カード</text>
+<rect class="chip" x="306" y="770" width="124" height="26" rx="13"/><text class="chiptx" x="368" y="787" text-anchor="middle">週別収支カード</text>
+<rect class="chip" x="440" y="770" width="124" height="26" rx="13"/><text class="chiptx" x="502" y="787" text-anchor="middle">日別収支リスト</text>
+</svg>

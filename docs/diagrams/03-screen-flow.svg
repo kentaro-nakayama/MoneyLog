@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 790" width="960" height="790" role="img" aria-label="MoneyLog 画面遷移図">
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="#55657a"/></marker>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP","Yu Gothic",Arial,sans-serif}
+.ttl{font-size:21px;font-weight:700;fill:#E6EDF3}
+.sub{font-size:13px;fill:#8695A4}
+.sec{font-size:13px;font-weight:700;fill:#A9B7C5}
+.h{font-size:14.5px;font-weight:700;fill:#E9EFF5}
+.hs{font-size:13px;font-weight:700;fill:#E9EFF5}
+.b{font-size:12px;fill:#A7B4C2}
+.m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Courier New",monospace;font-size:11.5px;fill:#9BAAB9}
+.m2{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Courier New",monospace;font-size:10.5px;fill:#9BAAB9}
+.lab{font-size:11.5px;fill:#8695A4}
+.panel{fill:#12171E;stroke:#232B36}
+.node{fill:#1A212A;stroke:#333D4A}
+.grp{fill:#11161D;stroke:#2E3845;stroke-dasharray:5 4}
+.ar{fill:none;stroke:#55657a;stroke-width:1.5;marker-end:url(#ah)}
+.ar2{fill:none;stroke:#55657a;stroke-width:1.5;marker-end:url(#ah);marker-start:url(#ah)}
+</style>
+</defs>
+<rect width="960" height="790" fill="#0E1116"/>
+<text class="ttl" x="32" y="48">MoneyLog 構成図 ③｜画面遷移</text>
+<text class="sub" x="32" y="72">5つの画面と、画面をまたぐ操作（GET で表示・POST で保存）</text>
+
+<rect class="grp" x="40" y="100" width="460" height="190" rx="12"/>
+<text class="sec" x="58" y="124">未ログイン（guest ミドルウェア）</text>
+
+<rect class="node" x="60" y="140" width="190" height="110" rx="10"/>
+<rect x="61" y="152" width="3.5" height="86" rx="2" fill="#D29922"/>
+<text class="hs" x="78" y="166">ログイン画面</text>
+<text class="m2" x="78" y="188">GET /login</text>
+<text class="b" x="78" y="210">メール ＋ パスワード</text>
+<text class="b" x="78" y="230">ログイン状態を保持</text>
+
+<rect class="node" x="290" y="140" width="190" height="110" rx="10"/>
+<rect x="291" y="152" width="3.5" height="86" rx="2" fill="#D29922"/>
+<text class="hs" x="308" y="166">サインアップ画面</text>
+<text class="m2" x="308" y="188">GET /signup</text>
+<text class="b" x="308" y="210">名前・メール・パスワード</text>
+<text class="b" x="308" y="230">確認用パスワードあり</text>
+
+<path class="ar2" d="M254,196 H286"/>
+<text class="lab" x="180" y="274">下部のリンクで行き来できる</text>
+
+<rect class="grp" x="40" y="310" width="880" height="400" rx="12"/>
+<text class="sec" x="902" y="336" text-anchor="end">ログイン済み（auth ミドルウェア）</text>
+
+<rect class="node" x="330" y="360" width="300" height="130" rx="10"/>
+<rect x="331" y="372" width="3.5" height="106" rx="2" fill="#3FB950"/>
+<text class="h" x="350" y="388">ホーム画面</text>
+<text class="m2" x="350" y="410">GET /  ?year=2026&amp;month=9</text>
+<text class="b" x="350" y="432">今月の収支・週別収支・日別リスト</text>
+<text class="b" x="350" y="452">矢印で前後の月へ移動できる</text>
+<text class="b" x="350" y="472">右下の「＋」から新規登録へ</text>
+
+<rect class="node" x="60" y="560" width="300" height="120" rx="10"/>
+<rect x="61" y="572" width="3.5" height="96" rx="2" fill="#58A6FF"/>
+<text class="hs" x="80" y="588">新規登録画面</text>
+<text class="m2" x="80" y="610">GET /register_form → POST /register</text>
+<text class="b" x="80" y="632">種別・金額・カテゴリ・日付・メモ</text>
+<text class="b" x="80" y="652">カテゴリはボタンで選ぶ</text>
+
+<rect class="node" x="600" y="560" width="300" height="120" rx="10"/>
+<rect x="601" y="572" width="3.5" height="96" rx="2" fill="#F85149"/>
+<text class="hs" x="620" y="588">編集・削除画面</text>
+<text class="m2" x="620" y="610">GET /edit_form/{id}</text>
+<text class="b" x="620" y="632">「編集する」で更新</text>
+<text class="b" x="620" y="652">「削除する」でその記録を削除</text>
+
+<path class="ar2" d="M160,250 V425 H326"/>
+<text class="lab" x="170" y="396">↓ POST /login 成功</text>
+<text class="lab" x="170" y="416">↑ POST /logout</text>
+
+<path class="ar" d="M385,250 V345 H455 V356"/>
+<text class="lab" x="395" y="300">POST /signup</text>
+
+<path class="ar2" d="M400,490 V530 H210 V556"/>
+<text class="lab" x="220" y="506">↓ 「＋」ボタンで開く</text>
+<text class="lab" x="220" y="524">↑ POST /register で保存</text>
+
+<path class="ar2" d="M560,490 V530 H750 V556"/>
+<text class="lab" x="570" y="506">↓ 日別リストをタップ</text>
+<text class="lab" x="570" y="524">↑ POST /edit・POST /delete</text>
+
+<rect class="panel" x="40" y="726" width="880" height="48" rx="10"/>
+<text class="b" x="58" y="746">未ログインで auth のルートを開くと /login へリダイレクトされる（redirectGuestsTo）</text>
+<text class="b" x="58" y="766">POST /login・POST /signup は throttle:5,1（1分に5回まで）／すべての POST に @csrf</text>
+</svg>

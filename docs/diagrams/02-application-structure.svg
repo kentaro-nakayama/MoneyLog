@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 850" width="960" height="850" role="img" aria-label="MoneyLog アプリケーション構成図">
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="#55657a"/></marker>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP","Yu Gothic",Arial,sans-serif}
+.ttl{font-size:21px;font-weight:700;fill:#E6EDF3}
+.sub{font-size:13px;fill:#8695A4}
+.sec{font-size:13px;font-weight:700;fill:#A9B7C5}
+.h{font-size:14.5px;font-weight:700;fill:#E9EFF5}
+.hs{font-size:13px;font-weight:700;fill:#E9EFF5}
+.b{font-size:12px;fill:#A7B4C2}
+.m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Courier New",monospace;font-size:11.5px;fill:#9BAAB9}
+.m2{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Courier New",monospace;font-size:10.5px;fill:#9BAAB9}
+.lab{font-size:11.5px;fill:#8695A4}
+.chip{fill:#1D2530;stroke:#39434F}
+.chiptx{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Courier New",monospace;font-size:10.5px;fill:#AEBAC6}
+.panel{fill:#12171E;stroke:#232B36}
+.node{fill:#1A212A;stroke:#333D4A}
+.sunk{fill:#151B23;stroke:#232B36}
+.ar{fill:none;stroke:#55657a;stroke-width:1.5;marker-end:url(#ah)}
+</style>
+</defs>
+<rect width="960" height="850" fill="#0E1116"/>
+<text class="ttl" x="32" y="48">MoneyLog 構成図 ②｜アプリケーション構成（Laravel の内部）</text>
+<text class="sub" x="32" y="72">ルーティング → コントローラ → モデル → MySQL と流れ、Blade が HTML を返す</text>
+
+<rect class="node" x="32" y="92" width="896" height="60" rx="10"/>
+<rect x="33" y="104" width="3.5" height="36" rx="2" fill="#58A6FF"/>
+<text class="h" x="50" y="118">ユーザーのブラウザ</text>
+<text class="b" x="50" y="138">Blade が組み立てた HTML ＋ public/css/style_cat.css・reset.css・Bootstrap Icons（CDN）</text>
+
+<path class="ar" d="M200,152 V176"/>
+<text class="lab" x="210" y="170">リクエスト</text>
+
+<rect class="panel" x="32" y="180" width="600" height="120" rx="12"/>
+<text class="h" x="48" y="206">routes/web.php（ルーティング）</text>
+<text class="b" x="48" y="224">URL とコントローラのメソッドを結び付け、ミドルウェアで入口を守る</text>
+<rect class="chip" x="48" y="236" width="58" height="24" rx="12"/><text class="chiptx" x="77" y="252" text-anchor="middle">guest</text>
+<rect class="chip" x="114" y="236" width="54" height="24" rx="12"/><text class="chiptx" x="141" y="252" text-anchor="middle">auth</text>
+<rect class="chip" x="176" y="236" width="96" height="24" rx="12"/><text class="chiptx" x="224" y="252" text-anchor="middle">throttle:5,1</text>
+<rect class="chip" x="280" y="236" width="58" height="24" rx="12"/><text class="chiptx" x="309" y="252" text-anchor="middle">@csrf</text>
+<rect class="chip" x="48" y="266" width="176" height="24" rx="12"/><text class="chiptx" x="136" y="282" text-anchor="middle">redirectGuestsTo('/login')</text>
+<rect class="chip" x="232" y="266" width="146" height="24" rx="12"/><text class="chiptx" x="305" y="282" text-anchor="middle">trustProxies(at:'*')</text>
+
+<path class="ar" d="M200,300 V328"/>
+<text class="lab" x="210" y="322">ミドルウェアを通過</text>
+
+<rect class="panel" x="32" y="332" width="600" height="200" rx="12"/>
+<text class="h" x="48" y="358">app/Http/Controllers</text>
+
+<rect class="node" x="48" y="372" width="182" height="146" rx="10"/>
+<rect x="49" y="384" width="3.5" height="122" rx="2" fill="#D29922"/>
+<text class="hs" x="64" y="394">AuthController</text>
+<text class="m2" x="64" y="414">showLoginForm()</text>
+<text class="m2" x="64" y="432">login()</text>
+<text class="m2" x="64" y="450">logout()</text>
+<text class="m2" x="64" y="468">showSignupForm()</text>
+<text class="m2" x="64" y="486">signup()</text>
+<text class="b" x="64" y="508">ログイン・サインアップ</text>
+
+<rect class="node" x="240" y="372" width="182" height="146" rx="10"/>
+<rect x="241" y="384" width="3.5" height="122" rx="2" fill="#3FB950"/>
+<text class="hs" x="256" y="394">HomeController</text>
+<text class="m2" x="256" y="414">showHome()</text>
+<text class="m2" x="256" y="432">calculateMonthlyTotal()</text>
+<text class="m2" x="256" y="450">calculateWeeklyTotal()</text>
+<text class="m2" x="256" y="468">calculateWeeklyBreak…()</text>
+<text class="m2" x="256" y="486">getDailyTransactions()</text>
+<text class="b" x="256" y="508">月・週・日の集計</text>
+
+<rect class="node" x="432" y="372" width="182" height="146" rx="10"/>
+<rect x="433" y="384" width="3.5" height="122" rx="2" fill="#BC8CFF"/>
+<text class="hs" x="448" y="394">TransactionController</text>
+<text class="m2" x="448" y="414">showRegisterForm()</text>
+<text class="m2" x="448" y="432">registerTransaction()</text>
+<text class="m2" x="448" y="450">showEditForm()</text>
+<text class="m2" x="448" y="468">editTransaction()</text>
+<text class="m2" x="448" y="486">deleteTransaction()</text>
+<text class="m2" x="448" y="504">findOwnedTransaction()</text>
+
+<path class="ar" d="M200,532 V558"/>
+<text class="lab" x="210" y="552">Eloquent</text>
+
+<rect class="panel" x="32" y="562" width="600" height="124" rx="12"/>
+<text class="h" x="48" y="588">app/Models（Eloquent）</text>
+<rect class="node" x="48" y="600" width="278" height="76" rx="10"/>
+<rect x="49" y="612" width="3.5" height="52" rx="2" fill="#58A6FF"/>
+<text class="hs" x="64" y="620">User</text>
+<text class="m2" x="64" y="640">hasMany(Transaction::class)</text>
+<text class="b" x="64" y="658">password は hashed にキャスト</text>
+<rect class="node" x="338" y="600" width="278" height="76" rx="10"/>
+<rect x="339" y="612" width="3.5" height="52" rx="2" fill="#FFA657"/>
+<text class="hs" x="354" y="620">Transaction</text>
+<text class="m2" x="354" y="640">belongsTo(User::class)</text>
+<text class="b" x="354" y="658">amount → integer ／ date → Carbon</text>
+
+<path class="ar" d="M200,686 V714"/>
+<text class="lab" x="210" y="708">SQL（PDO）</text>
+
+<rect class="panel" x="32" y="718" width="600" height="86" rx="12"/>
+<text class="h" x="48" y="744">MySQL（migration で作成したテーブル）</text>
+<rect class="chip" x="48" y="756" width="60" height="24" rx="12"/><text class="chiptx" x="78" y="772" text-anchor="middle">users</text>
+<rect class="chip" x="116" y="756" width="104" height="24" rx="12"/><text class="chiptx" x="168" y="772" text-anchor="middle">transactions</text>
+<rect class="chip" x="228" y="756" width="78" height="24" rx="12"/><text class="chiptx" x="267" y="772" text-anchor="middle">sessions</text>
+<rect class="chip" x="314" y="756" width="166" height="24" rx="12"/><text class="chiptx" x="397" y="772" text-anchor="middle">password_reset_tokens</text>
+<rect class="chip" x="488" y="756" width="58" height="24" rx="12"/><text class="chiptx" x="517" y="772" text-anchor="middle">cache</text>
+<rect class="chip" x="554" y="756" width="50" height="24" rx="12"/><text class="chiptx" x="579" y="772" text-anchor="middle">jobs</text>
+
+<path class="ar" d="M632,430 H654"/>
+<rect class="panel" x="660" y="332" width="268" height="354" rx="12"/>
+<text class="h" x="678" y="358">resources/views（Blade）</text>
+<text class="b" x="678" y="376">コントローラが view() で描画</text>
+<text class="m" x="678" y="402">common/head.blade.php</text>
+<text class="m" x="678" y="424">common/header.blade.php</text>
+<text class="m" x="678" y="446">login.blade.php</text>
+<text class="m" x="678" y="468">signup.blade.php</text>
+<text class="m" x="678" y="490">home.blade.php</text>
+<text class="m" x="678" y="512">register.blade.php</text>
+<text class="m" x="678" y="534">edit.blade.php</text>
+<line x1="678" y1="552" x2="910" y2="552" stroke="#232B36"/>
+<text class="b" x="678" y="574">読み込む静的ファイル</text>
+<text class="m" x="678" y="598">public/css/style_cat.css</text>
+<text class="m" x="678" y="620">public/css/reset.css</text>
+<text class="m" x="678" y="642">Bootstrap Icons（CDN）</text>
+<text class="b" x="678" y="668">CSS の URL に ?v=更新日時 を付与</text>
+
+<path class="ar" d="M794,332 V158"/>
+<text class="lab" x="806" y="240">HTML レスポンス</text>
+</svg>

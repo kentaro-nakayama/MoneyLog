@@ -56,6 +56,40 @@
 
 本番環境は、Heroku から VPS に移し、サーバーを自分で構築して公開しています。構成とデプロイの方法は [本番環境とデプロイ](docs/deployment.md) にまとめています。
 
+## 構成図
+
+アプリの構成を、大まかなものから細かいものへ 6 枚の図にまとめています（SVG）。画像をクリックすると拡大表示されます。
+
+### ① システム構成（全体像）
+ブラウザから MySQL までの経路と、開発からデプロイまでの流れです。
+
+![システム構成図](docs/diagrams/01-system-architecture.svg)
+
+### ② アプリケーション構成（Laravel の内部）
+ルーティング → コントローラ → モデル → MySQL の流れと、Blade がどこで HTML を返すかです。
+
+![アプリケーション構成図](docs/diagrams/02-application-structure.svg)
+
+### ③ 画面遷移
+5 つの画面と、画面をまたぐ操作（GET で表示・POST で保存）です。
+
+![画面遷移図](docs/diagrams/03-screen-flow.svg)
+
+### ④ データモデル（ER図）
+`users` と `transactions` のカラムと、1 対 多の関係です。
+
+![データモデル（ER図）](docs/diagrams/04-data-model.svg)
+
+### ⑤ 機能詳細：ホーム画面の集計
+`HomeController::showHome()` が 4 つの集計を行い、1 画面分のデータをまとめてビューへ渡すまでです。
+
+![ホーム画面の集計の図](docs/diagrams/05-home-aggregation.svg)
+
+### ⑥ 機能詳細：登録・編集・削除の流れ
+入力チェックと所有者チェックを通ってから保存し、ホーム画面に戻るまでです。
+
+![登録・編集・削除の流れの図](docs/diagrams/06-transaction-flow.svg)
+
 ## ローカルでの動かし方
 
 ### 必要なもの
@@ -117,3 +151,4 @@ GitHub Actions でも、`main` への push とプルリクエストのたびに�
 ## 資料
 - [要件定義書](docs/requirements.md)：想定ユーザー、機能要件（MoSCoW）、画面構成、データ設計、技術選定の経緯
 - [本番環境とデプロイ](docs/deployment.md)：サーバー構成、セキュリティ、デプロイ・バックアップ・運用の方法
+- [構成図](docs/diagrams/)：この README に貼っている 6 枚の SVG の置き場所

@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 780" width="960" height="780" role="img" aria-label="MoneyLog システム構成図">
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="#55657a"/></marker>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP","Yu Gothic",Arial,sans-serif}
+.ttl{font-size:21px;font-weight:700;fill:#E6EDF3}
+.sub{font-size:13px;fill:#8695A4}
+.sec{font-size:13px;font-weight:700;fill:#A9B7C5}
+.h{font-size:14.5px;font-weight:700;fill:#E9EFF5}
+.b{font-size:12px;fill:#A7B4C2}
+.m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Courier New",monospace;font-size:11.5px;fill:#9BAAB9}
+.lab{font-size:11.5px;fill:#8695A4}
+.panel{fill:#12171E;stroke:#232B36}
+.node{fill:#1A212A;stroke:#333D4A}
+.sunk{fill:#151B23;stroke:#232B36}
+.grp{fill:none;stroke:#2E3845;stroke-dasharray:5 4}
+.ar{fill:none;stroke:#55657a;stroke-width:1.5;marker-end:url(#ah)}
+</style>
+</defs>
+<rect width="960" height="780" fill="#0E1116"/>
+<text class="ttl" x="32" y="48">MoneyLog 構成図 ①｜システム構成（全体像）</text>
+<text class="sub" x="32" y="72">ブラウザから MySQL までの経路と、開発からデプロイまでの流れ</text>
+
+<rect class="panel" x="32" y="92" width="440" height="650" rx="14"/>
+<text class="sec" x="52" y="118">リクエストの流れ</text>
+
+<rect class="node" x="72" y="136" width="360" height="56" rx="10"/>
+<rect x="73" y="148" width="3.5" height="32" rx="2" fill="#58A6FF"/>
+<text class="h" x="90" y="160">ユーザーのブラウザ</text>
+<text class="b" x="90" y="179">スマホ表示（393 × 852）を想定</text>
+<path class="ar" d="M252,192 V214"/>
+<text class="lab" x="262" y="208">HTTPS</text>
+
+<rect class="node" x="72" y="216" width="360" height="56" rx="10"/>
+<rect x="73" y="228" width="3.5" height="32" rx="2" fill="#39C5CF"/>
+<text class="h" x="90" y="240">ConoHa DNS ／ 独自ドメイン</text>
+<text class="b" x="90" y="259">catmoneylog-2438.com → VPS（A レコード）</text>
+<path class="ar" d="M252,272 V298"/>
+
+<rect class="grp" x="52" y="300" width="400" height="422" rx="12"/>
+<text class="sec" x="70" y="324">ConoHa VPS ／ Ubuntu 24.04 LTS</text>
+
+<rect class="node" x="72" y="336" width="360" height="72" rx="10"/>
+<rect x="73" y="348" width="3.5" height="48" rx="2" fill="#D29922"/>
+<text class="h" x="90" y="359">ファイアウォール ＋ fail2ban</text>
+<text class="b" x="90" y="378">セキュリティグループと UFW で</text>
+<text class="b" x="90" y="396">22・80・443 番だけを通す／SSH 失敗はブロック</text>
+<path class="ar" d="M252,408 V430"/>
+
+<rect class="node" x="72" y="432" width="360" height="72" rx="10"/>
+<rect x="73" y="444" width="3.5" height="48" rx="2" fill="#3FB950"/>
+<text class="h" x="90" y="455">Nginx</text>
+<text class="b" x="90" y="474">HTTPS 終端：Let's Encrypt（自動更新）</text>
+<text class="b" x="90" y="492">公開するのは public/ だけ・HTTP は HTTPS へ</text>
+<path class="ar" d="M252,504 V526"/>
+
+<rect class="node" x="72" y="528" width="360" height="72" rx="10"/>
+<rect x="73" y="540" width="3.5" height="48" rx="2" fill="#BC8CFF"/>
+<text class="h" x="90" y="551">PHP-FPM 8.5 ＋ Laravel 13</text>
+<text class="b" x="90" y="570">Nginx から UNIX ソケット経由で受け取る</text>
+<text class="b" x="90" y="588">APP_ENV=production・APP_DEBUG=false</text>
+<path class="ar" d="M252,600 V622"/>
+
+<rect class="node" x="72" y="624" width="360" height="72" rx="10"/>
+<rect x="73" y="636" width="3.5" height="48" rx="2" fill="#FFA657"/>
+<text class="h" x="90" y="647">MySQL 8.0</text>
+<text class="b" x="90" y="666">127.0.0.1 からのみ接続（外部に公開しない）</text>
+<text class="b" x="90" y="684">アプリ用ユーザーは laravel_app だけに権限</text>
+
+<rect class="panel" x="488" y="92" width="440" height="650" rx="14"/>
+<text class="sec" x="508" y="118">開発とデプロイ</text>
+
+<rect class="node" x="528" y="136" width="360" height="56" rx="10"/>
+<rect x="529" y="148" width="3.5" height="32" rx="2" fill="#58A6FF"/>
+<text class="h" x="546" y="160">Mac（ローカル開発）</text>
+<text class="b" x="546" y="179">php artisan serve ／ php artisan test</text>
+<path class="ar" d="M708,192 V214"/>
+<text class="lab" x="718" y="208">git push origin main</text>
+
+<rect class="node" x="528" y="216" width="360" height="56" rx="10"/>
+<rect x="529" y="228" width="3.5" height="32" rx="2" fill="#A5B4C4"/>
+<text class="h" x="546" y="240">GitHub リポジトリ</text>
+<text class="b" x="546" y="259">kentaro-nakayama/MoneyLog（main）</text>
+<path class="ar" d="M708,272 V298"/>
+<text class="lab" x="718" y="292">push ／ プルリクエスト</text>
+
+<rect class="node" x="528" y="300" width="360" height="72" rx="10"/>
+<rect x="529" y="312" width="3.5" height="48" rx="2" fill="#3FB950"/>
+<text class="h" x="546" y="323">GitHub Actions（自動テスト）</text>
+<text class="b" x="546" y="342">main への push とプルリクエストのたびに</text>
+<text class="b" x="546" y="360">本番と同じ MySQL 8.0 で PHPUnit を実行</text>
+<path class="ar" d="M708,372 V398"/>
+<text class="lab" x="718" y="392">テスト通過後に手動でデプロイ</text>
+
+<rect class="node" x="528" y="400" width="360" height="56" rx="10"/>
+<rect x="529" y="412" width="3.5" height="32" rx="2" fill="#BC8CFF"/>
+<text class="h" x="546" y="424">~/deploy-moneylog.sh</text>
+<text class="b" x="546" y="443">VPS 上で手動実行（set -euo pipefail）</text>
+
+<rect class="sunk" x="528" y="462" width="360" height="166" rx="10"/>
+<text class="m" x="548" y="486">1  php artisan down --retry=15</text>
+<text class="m" x="548" y="510">2  git pull --ff-only origin main</text>
+<text class="m" x="548" y="534">3  composer install --no-dev</text>
+<text class="m" x="548" y="558">4  php artisan migrate --force</text>
+<text class="m" x="548" y="582">5  php artisan optimize</text>
+<text class="m" x="548" y="606">6  systemctl reload php8.5-fpm</text>
+<path class="ar" d="M708,628 V654"/>
+
+<rect class="node" x="528" y="656" width="360" height="56" rx="10"/>
+<rect x="529" y="668" width="3.5" height="32" rx="2" fill="#FFA657"/>
+<text class="h" x="546" y="680">cron 毎日 3:00 バックアップ</text>
+<text class="b" x="546" y="699">mysqldump → ~/backups/（7日分を保持）</text>
+</svg>

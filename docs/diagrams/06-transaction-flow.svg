@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 752" width="960" height="752" role="img" aria-label="登録・編集・削除の流れ">
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="#55657a"/></marker>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP","Yu Gothic",Arial,sans-serif}
+.ttl{font-size:21px;font-weight:700;fill:#E6EDF3}
+.sub{font-size:13px;fill:#8695A4}
+.sec{font-size:13px;font-weight:700;fill:#A9B7C5}
+.h{font-size:14.5px;font-weight:700;fill:#E9EFF5}
+.hs{font-size:13px;font-weight:700;fill:#E9EFF5}
+.b{font-size:12px;fill:#A7B4C2}
+.m2{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Courier New",monospace;font-size:10.5px;fill:#9BAAB9}
+.lab{font-size:11.5px;fill:#8695A4}
+.panel{fill:#12171E;stroke:#232B36}
+.node{fill:#1A212A;stroke:#333D4A}
+.warn{fill:#1E1A1A;stroke:#5A3A38}
+.ar{fill:none;stroke:#55657a;stroke-width:1.5;marker-end:url(#ah)}
+</style>
+</defs>
+<rect width="960" height="752" fill="#0E1116"/>
+<text class="ttl" x="32" y="48">MoneyLog 構成図 ⑥｜機能詳細：登録・編集・削除の流れ</text>
+<text class="sub" x="32" y="72">入力チェックと所有者チェックを通ってから保存し、ホーム画面に戻る</text>
+
+<rect class="panel" x="32" y="96" width="896" height="250" rx="12"/>
+<text class="sec" x="52" y="122">新規登録（POST /register）</text>
+
+<rect class="node" x="52" y="150" width="156" height="76" rx="10"/>
+<rect x="53" y="162" width="3.5" height="52" rx="2" fill="#58A6FF"/>
+<text class="hs" x="68" y="176">新規登録画面</text>
+<text class="m2" x="68" y="196">register.blade.php</text>
+<text class="b" x="68" y="214">入力して送信</text>
+<path class="ar" d="M208,188 H228"/>
+
+<rect class="node" x="232" y="150" width="156" height="76" rx="10"/>
+<rect x="233" y="162" width="3.5" height="52" rx="2" fill="#D29922"/>
+<text class="hs" x="248" y="176">POST /register</text>
+<text class="m2" x="248" y="196">@csrf ＋ auth</text>
+<text class="b" x="248" y="214">ログイン必須</text>
+<path class="ar" d="M388,188 H408"/>
+
+<rect class="node" x="412" y="150" width="156" height="76" rx="10"/>
+<rect x="413" y="162" width="3.5" height="52" rx="2" fill="#3FB950"/>
+<text class="hs" x="428" y="176">バリデーション</text>
+<text class="b" x="428" y="196">5項目をチェック</text>
+<text class="b" x="428" y="214">（内容は下に記載）</text>
+<path class="ar" d="M568,188 H588"/>
+<path class="ar" d="M490,226 V258"/>
+<text class="lab" x="498" y="248">NG</text>
+
+<rect class="node" x="592" y="150" width="156" height="76" rx="10"/>
+<rect x="593" y="162" width="3.5" height="52" rx="2" fill="#BC8CFF"/>
+<text class="hs" x="608" y="176">保存</text>
+<text class="m2" x="608" y="196">transactions()</text>
+<text class="m2" x="608" y="212">-&gt;create()</text>
+<path class="ar" d="M748,188 H768"/>
+
+<rect class="node" x="772" y="150" width="156" height="76" rx="10"/>
+<rect x="773" y="162" width="3.5" height="52" rx="2" fill="#FFA657"/>
+<text class="hs" x="788" y="176">ホームへ戻る</text>
+<text class="m2" x="788" y="196">redirect('/')</text>
+<text class="b" x="788" y="214">集計に反映される</text>
+
+<rect class="warn" x="412" y="262" width="156" height="56" rx="10"/>
+<text class="b" x="428" y="284">入力エラーを表示して</text>
+<text class="b" x="428" y="304">画面に戻る</text>
+<text class="b" x="592" y="284">user_id は $request-&gt;user() から自動で入るので、</text>
+<text class="b" x="592" y="304">他人の取引として保存されることがない</text>
+
+<rect class="panel" x="32" y="366" width="896" height="270" rx="12"/>
+<text class="sec" x="52" y="392">編集・削除（GET /edit_form/{id} → POST /edit/{id}・POST /delete/{id}）</text>
+
+<rect class="node" x="52" y="420" width="156" height="76" rx="10"/>
+<rect x="53" y="432" width="3.5" height="52" rx="2" fill="#58A6FF"/>
+<text class="hs" x="68" y="446">一覧をタップ</text>
+<text class="m2" x="68" y="466">GET /edit_form/{id}</text>
+<text class="b" x="68" y="484">ホームの日別リスト</text>
+<path class="ar" d="M208,458 H228"/>
+
+<rect class="node" x="232" y="420" width="156" height="76" rx="10"/>
+<rect x="233" y="432" width="3.5" height="52" rx="2" fill="#F85149"/>
+<text class="hs" x="248" y="446">所有者チェック</text>
+<text class="m2" x="248" y="466">transactions()</text>
+<text class="m2" x="248" y="482">-&gt;findOrFail($id)</text>
+<path class="ar" d="M388,458 H408"/>
+<path class="ar" d="M310,496 V528"/>
+<text class="lab" x="318" y="518">他人の id</text>
+
+<rect class="node" x="412" y="420" width="156" height="76" rx="10"/>
+<rect x="413" y="432" width="3.5" height="52" rx="2" fill="#3FB950"/>
+<text class="hs" x="428" y="446">編集・削除画面</text>
+<text class="b" x="428" y="466">現在の値を表示</text>
+<text class="b" x="428" y="484">編集する／削除する</text>
+<path class="ar" d="M568,458 H588"/>
+
+<rect class="node" x="592" y="420" width="156" height="76" rx="10"/>
+<rect x="593" y="432" width="3.5" height="52" rx="2" fill="#BC8CFF"/>
+<text class="hs" x="608" y="446">更新 ／ 削除</text>
+<text class="m2" x="608" y="466">update() ／ delete()</text>
+<text class="b" x="608" y="484">更新も入力チェック</text>
+<path class="ar" d="M748,458 H768"/>
+
+<rect class="node" x="772" y="420" width="156" height="76" rx="10"/>
+<rect x="773" y="432" width="3.5" height="52" rx="2" fill="#FFA657"/>
+<text class="hs" x="788" y="446">ホームへ戻る</text>
+<text class="m2" x="788" y="466">redirect('/')</text>
+<text class="b" x="788" y="484">一覧から消える</text>
+
+<rect class="warn" x="232" y="532" width="156" height="56" rx="10"/>
+<text class="b" x="248" y="554">404（見つからない</text>
+<text class="b" x="248" y="574">扱いになる）</text>
+<text class="b" x="412" y="554">POST /edit/{id}・POST /delete/{id} も同じ所有者チェックを通すので、</text>
+<text class="b" x="412" y="574">URL の id を書き換えても他人の記録は更新も削除もできない</text>
+
+<rect class="panel" x="32" y="656" width="896" height="72" rx="12"/>
+<text class="b" x="50" y="682">バリデーション：type ＝ 収入／支出、amount ＝ 1 以上の整数、category ＝ 6種のいずれか（任意）、date ＝ 日付、memo ＝ 任意</text>
+<text class="b" x="50" y="706">共通：未ログインは /login へリダイレクト、POST には @csrf、取引は必ず $user-&gt;transactions() 経由で扱う</text>
+</svg>

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="960" height="640" role="img" aria-label="MoneyLog データモデル（ER図）">
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 Z" fill="#55657a"/></marker>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP","Yu Gothic",Arial,sans-serif}
+.ttl{font-size:21px;font-weight:700;fill:#E6EDF3}
+.sub{font-size:13px;fill:#8695A4}
+.sec{font-size:13px;font-weight:700;fill:#A9B7C5}
+.h{font-size:15px;font-weight:700;fill:#E9EFF5}
+.b{font-size:12px;fill:#A7B4C2}
+.m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Courier New",monospace;font-size:11.5px;fill:#D5DEE7}
+.ty{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Courier New",monospace;font-size:11px;fill:#8695A4}
+.lab{font-size:11.5px;fill:#8695A4}
+.panel{fill:#12171E;stroke:#232B36}
+.card{fill:#161C24;stroke:#333D4A}
+.ar2{fill:none;stroke:#55657a;stroke-width:1.5;marker-end:url(#ah);marker-start:url(#ah)}
+</style>
+</defs>
+<rect width="960" height="640" fill="#0E1116"/>
+<text class="ttl" x="32" y="48">MoneyLog 構成図 ④｜データモデル（ER図）</text>
+<text class="sub" x="32" y="72">users（ユーザー）と transactions（取引）の 1 対 多。取引は必ず持ち主に紐づく</text>
+
+<rect class="card" x="30" y="110" width="380" height="250" rx="12"/>
+<text class="h" x="50" y="138">users</text>
+<text class="lab" x="118" y="138">ユーザー</text>
+<line x1="30" y1="150" x2="410" y2="150" stroke="#2A323D"/>
+<text class="m" x="50" y="176">id</text><text class="ty" x="215" y="176">BIGINT UNSIGNED・PK</text>
+<text class="m" x="50" y="202">name</text><text class="ty" x="215" y="202">VARCHAR(255)</text>
+<text class="m" x="50" y="228">email</text><text class="ty" x="215" y="228">VARCHAR(255)・UNIQUE</text>
+<text class="m" x="50" y="254">email_verified_at</text><text class="ty" x="215" y="254">TIMESTAMP・NULL</text>
+<text class="m" x="50" y="280">password</text><text class="ty" x="215" y="280">VARCHAR(255)・hashed</text>
+<text class="m" x="50" y="306">remember_token</text><text class="ty" x="215" y="306">VARCHAR(100)</text>
+<text class="m" x="50" y="332">created_at/updated_at</text><text class="ty" x="215" y="332">TIMESTAMP</text>
+
+<rect class="card" x="550" y="110" width="380" height="276" rx="12"/>
+<text class="h" x="570" y="138">transactions</text>
+<text class="lab" x="672" y="138">収入・支出の記録</text>
+<line x1="550" y1="150" x2="930" y2="150" stroke="#2A323D"/>
+<text class="m" x="570" y="176">id</text><text class="ty" x="735" y="176">INT UNSIGNED・PK</text>
+<text class="m" x="570" y="202">user_id</text><text class="ty" x="735" y="202">BIGINT・FK → users.id</text>
+<text class="m" x="570" y="228">type</text><text class="ty" x="735" y="228">ENUM('収入','支出')</text>
+<text class="m" x="570" y="254">amount</text><text class="ty" x="735" y="254">INT UNSIGNED</text>
+<text class="m" x="570" y="280">category</text><text class="ty" x="735" y="280">ENUM(6種)・NULL</text>
+<text class="m" x="570" y="306">date</text><text class="ty" x="735" y="306">DATE</text>
+<text class="m" x="570" y="332">memo</text><text class="ty" x="735" y="332">TEXT・NULL</text>
+<text class="m" x="570" y="358">created_at/updated_at</text><text class="ty" x="735" y="358">TIMESTAMP</text>
+
+<path class="ar2" d="M410,250 H548"/>
+<text class="lab" x="480" y="234" text-anchor="middle">hasMany ／ belongsTo</text>
+<text class="lab" x="418" y="268">1</text>
+<text class="lab" x="542" y="268" text-anchor="end">N</text>
+<text class="lab" x="480" y="292" text-anchor="middle">cascadeOnDelete</text>
+
+<rect class="panel" x="30" y="416" width="540" height="190" rx="12"/>
+<text class="sec" x="50" y="444">補足</text>
+<text class="b" x="50" y="470">カテゴリは 食費／日用品／交通費／趣味／光熱費／その他 の6種</text>
+<text class="b" x="50" y="494">カテゴリは未選択（NULL）でも登録できる</text>
+<text class="b" x="50" y="518">キャスト：amount → integer、date → Carbon</text>
+<text class="b" x="50" y="542">取引は必ず $user-&gt;transactions() 経由で読み書きする</text>
+<text class="b" x="50" y="566">そのため他人の id を指定しても 404 になり、閲覧も編集もできない</text>
+<text class="b" x="50" y="590">ユーザーを削除すると、その取引も一緒に消える</text>
+
+<rect class="panel" x="590" y="416" width="340" height="190" rx="12"/>
+<text class="sec" x="610" y="444">Laravel 標準のテーブル</text>
+<text class="m" x="610" y="470">sessions</text>
+<text class="m" x="610" y="492">password_reset_tokens</text>
+<text class="m" x="610" y="514">cache / cache_locks</text>
+<text class="m" x="610" y="536">jobs / job_batches / failed_jobs</text>
+<text class="m" x="610" y="558">migrations</text>
+<text class="b" x="610" y="588">セッション・キャッシュの保存先も MySQL</text>
+</svg>
